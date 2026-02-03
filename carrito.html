@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logotipo.png.png">
     <title>Mi Carrito - Accesorios by Faty</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -41,7 +42,6 @@
         }
         .empty-msg { text-align: center; color: #888; margin-top: 50px; }
 
-        /* --- ADAPTACIÓN MÓVIL --- */
         @media (max-width: 600px) {
             .cart-item { flex-direction: column; text-align: center; gap: 15px; }
             .fav-item { flex-direction: column; text-align: center; gap: 10px; }
@@ -70,8 +70,7 @@
 <main class="cart-container">
     <h2 class="section-title">Tu Carrito</h2>
     
-    <div id="lista-carrito">
-        </div>
+    <div id="lista-carrito"></div>
     
     <div id="cart-summary" style="display: none;">
         <div class="cart-total">Total: <span id="total-precio">0</span> Gs.</div>
@@ -87,15 +86,23 @@
         <h3 style="color: #435D78; margin-bottom: 15px;">
             <i class="fa-solid fa-heart" style="color: #ff6b6b;"></i> Mis Favoritos
         </h3>
-        <div id="lista-favoritos">
-            </div>
+        <div id="lista-favoritos"></div>
     </div>
 </main>
 
 <script>
+    // Diccionario de precios para recuperar info de favoritos que solo guardan nombre
+    const PRECIOS_MOÑOS = {
+        "Moño con aplique 1": 25000,
+        "Moño con aplique 2": 25000,
+        "Moño con aplique 3": 30000,
+        "Moño con aplique 4": 28000,
+        "Moño con aplique 5": 35000
+    };
+
     function cargarPagina() {
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+        let favoritosNombres = JSON.parse(localStorage.getItem('favoritos')) || [];
         
         const listaCarrito = document.getElementById('lista-carrito');
         const listaFavs = document.getElementById('lista-favoritos');
@@ -125,7 +132,7 @@
                             <p>${item.cantidad} unidad(es) x ${item.precio.toLocaleString()} Gs.</p>
                         </div>
                         <div class="cart-actions">
-                            <button class="btn-fav" onclick="moverAFavoritos(${index})"><i class="fa-regular fa-heart"></i></button>
+                            <button class="btn-fav" onclick="moverAFavoritos(${index})"><i class="fa-solid fa-heart"></i></button>
                             <button class="btn-remove" onclick="eliminarDelCarrito(${index})"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
@@ -138,15 +145,16 @@
 
         // --- RENDERIZAR FAVORITOS ---
         listaFavs.innerHTML = '';
-        if (favoritos.length === 0) {
+        if (favoritosNombres.length === 0) {
             listaFavs.innerHTML = '<p style="color:#aaa; font-size:14px; text-align:center;">No tienes productos guardados.</p>';
         } else {
-            favoritos.forEach((item, index) => {
+            favoritosNombres.forEach((nombre, index) => {
+                const precio = PRECIOS_MOÑOS[nombre] || 0;
                 listaFavs.innerHTML += `
                     <div class="fav-item">
                         <div class="cart-item-info">
-                            <h4>${item.nombre}</h4>
-                            <p>${item.precio.toLocaleString()} Gs.</p>
+                            <h4>${nombre}</h4>
+                            <p>${precio.toLocaleString()} Gs.</p>
                         </div>
                         <div class="cart-actions">
                             <button class="btn-add-back" onclick="moverAlCarrito(${index})">Volver al carrito</button>
@@ -168,7 +176,12 @@
     function moverAFavoritos(index) {
         let carrito = JSON.parse(localStorage.getItem('carrito'));
         let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-        favoritos.push(carrito[index]);
+        
+        const nombreProducto = carrito[index].nombre;
+        if (!favoritos.includes(nombreProducto)) {
+            favoritos.push(nombreProducto);
+        }
+        
         carrito.splice(index, 1);
         localStorage.setItem('carrito', JSON.stringify(carrito));
         localStorage.setItem('favoritos', JSON.stringify(favoritos));
@@ -178,7 +191,17 @@
     function moverAlCarrito(index) {
         let favoritos = JSON.parse(localStorage.getItem('favoritos'));
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        carrito.push(favoritos[index]);
+        
+        const nombre = favoritos[index];
+        const precio = PRECIOS_MOÑOS[nombre] || 25000;
+
+        const existente = carrito.find(item => item.nombre === nombre);
+        if (existente) {
+            existente.cantidad++;
+        } else {
+            carrito.push({ nombre: nombre, precio: precio, cantidad: 1 });
+        }
+
         favoritos.splice(index, 1);
         localStorage.setItem('carrito', JSON.stringify(carrito));
         localStorage.setItem('favoritos', JSON.stringify(favoritos));

@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logotipo.png.png">
     <title>Disponibles - Accesorios by Faty</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Estilo para los botones alineados */
         .cart-row { display: flex; gap: 8px; margin-bottom: 10px; }
         .btn-cart { flex: 1; } 
         
+        /* Estilos del botón favoritos */
         .btn-wishlist {
             background-color: white; border: 2px solid #ff6b6b; color: #ff6b6b;
             padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: 0.3s;
         }
-        .btn-wishlist:hover { background-color: #ff6b6b; color: white; }
+        /* Clase para cuando ya es favorito */
+        .btn-wishlist.active {
+            background-color: #ff6b6b;
+            color: white;
+        }
 
-        /* EL BOTÓN DE JUGAR */
         .game-launcher-container { text-align: center; margin: 20px 0; }
         .btn-open-game {
             background: #d1acff; color: white; border: none; padding: 12px 25px;
@@ -26,10 +30,8 @@
         }
         .btn-open-game:hover { background: #b085f5; transform: scale(1.05); }
 
-        /* AJUSTE PARA MÓVIL */
         @media (max-width: 480px) { .cart-row { flex-direction: row; } }
 
-        /* PANTALLA DEL JUEGO */
         #offline-game-container {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #f3eaff; z-index: 10000; text-align: center; padding-top: 50px;
@@ -90,13 +92,13 @@
                 <div class="product-card">
                     <div class="product-image"><img src="moño-1.png.png" alt="Moño 1"></div>
                     <div class="product-info">
-                        <h5>Moño con aplique 1</h5>
+                        <h5>Moño con aplique de nombre</h5>
                         <div class="product-buttons">
                             <div class="cart-row">
                                 <button class="btn-cart" data-name="Moño con aplique 1" data-price="25000">Añadir al Carrito</button>
-                                <button class="btn-wishlist" data-name="Moño con aplique 1" data-price="25000"><i class="fa-regular fa-heart"></i></button>
+                                <button class="btn-wishlist" data-name="Moño con aplique 1"><i class="fa-regular fa-heart"></i></button>
                             </div>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%201" class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%20quisiera%20hacer%20una%20consulta%20sobre..." class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -104,13 +106,13 @@
                 <div class="product-card">
                     <div class="product-image"><img src="moño-2.png.png" alt="Moño 2"></div>
                     <div class="product-info">
-                        <h5>Moño con aplique 2</h5>
+                        <h5>Moño con aplique de nombre</h5>
                         <div class="product-buttons">
                             <div class="cart-row">
                                 <button class="btn-cart" data-name="Moño con aplique 2" data-price="25000">Añadir al Carrito</button>
-                                <button class="btn-wishlist" data-name="Moño con aplique 2" data-price="25000"><i class="fa-regular fa-heart"></i></button>
+                                <button class="btn-wishlist" data-name="Moño con aplique 2"><i class="fa-regular fa-heart"></i></button>
                             </div>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%202" class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%20quisiera%20hacer%20una%20consulta%20sobre..." class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -122,9 +124,9 @@
                         <div class="product-buttons">
                             <div class="cart-row">
                                 <button class="btn-cart" data-name="Moño con aplique 3" data-price="30000">Añadir al Carrito</button>
-                                <button class="btn-wishlist" data-name="Moño con aplique 3" data-price="30000"><i class="fa-regular fa-heart"></i></button>
+                                <button class="btn-wishlist" data-name="Moño con aplique 3"><i class="fa-regular fa-heart"></i></button>
                             </div>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%203" class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%20quisiera%20hacer%20una%20consulta%20sobre..." class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -136,9 +138,9 @@
                         <div class="product-buttons">
                             <div class="cart-row">
                                 <button class="btn-cart" data-name="Moño con aplique 4" data-price="28000">Añadir al Carrito</button>
-                                <button class="btn-wishlist" data-name="Moño con aplique 4" data-price="28000"><i class="fa-regular fa-heart"></i></button>
+                                <button class="btn-wishlist" data-name="Moño con aplique 4"><i class="fa-regular fa-heart"></i></button>
                             </div>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%204" class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%20quisiera%20hacer%20una%20consulta%20sobre..." class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -150,9 +152,9 @@
                         <div class="product-buttons">
                             <div class="cart-row">
                                 <button class="btn-cart" data-name="Moño con aplique 5" data-price="35000">Añadir al Carrito</button>
-                                <button class="btn-wishlist" data-name="Moño con aplique 5" data-price="35000"><i class="fa-regular fa-heart"></i></button>
+                                <button class="btn-wishlist" data-name="Moño con aplique 5"><i class="fa-regular fa-heart"></i></button>
                             </div>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%205" class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            <a href="https://wa.me/595986898428?text=Hola!%20Moño%20quisiera%20hacer%20una%20consulta%20sobre..." class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -174,60 +176,44 @@
     </div>
 
     <script>
-        let puntos = 0;
-        let saltando = false;
-        let juegoActivo = false;
-        let bucleJuego;
-
+        // --- JUEGO ---
+        let puntos = 0, saltando = false, juegoActivo = false, bucleJuego;
         function abrirJuego() { document.getElementById('offline-game-container').style.display = 'block'; iniciarJuego(); }
         function cerrarJuego() { document.getElementById('offline-game-container').style.display = 'none'; clearInterval(bucleJuego); juegoActivo = false; }
-
         function saltar() {
-            const player = document.getElementById('player-monito');
-            if (saltando || !player) return;
-            saltando = true;
-            player.style.bottom = "90px";
-            setTimeout(() => { if(player) player.style.bottom = "0"; setTimeout(() => { saltando = false; }, 300); }, 400);
+            const p = document.getElementById('player-monito');
+            if (saltando || !p) return; saltando = true; p.style.bottom = "90px";
+            setTimeout(() => { if(p) p.style.bottom = "0"; setTimeout(() => saltando = false, 300); }, 400);
         }
-
         function iniciarJuego() {
-            if (juegoActivo) return;
-            juegoActivo = true;
-            const cactus = document.getElementById('cactus');
-            const scoreVal = document.getElementById('score-val');
-            puntos = 0; scoreVal.innerText = "0";
-            let cactusPos = -50;
+            if (juegoActivo) return; juegoActivo = true;
+            const c = document.getElementById('cactus'), s = document.getElementById('score-val');
+            puntos = 0; s.innerText = "0"; let cp = -50;
             bucleJuego = setInterval(() => {
-                cactusPos += 6;
-                if (cactusPos > 330) { cactusPos = -50; puntos++; scoreVal.innerText = puntos; }
-                cactus.style.right = cactusPos + "px";
-                let playerBottom = parseInt(window.getComputedStyle(document.getElementById('player-monito')).getPropertyValue("bottom"));
-                if (cactusPos > 230 && cactusPos < 265 && playerBottom < 35) {
-                    alert("¡Chocaste! Puntos: " + puntos);
-                    puntos = 0; scoreVal.innerText = "0"; cactusPos = -50;
-                }
+                cp += 6; if (cp > 330) { cp = -50; puntos++; s.innerText = puntos; }
+                c.style.right = cp + "px";
+                let pb = parseInt(window.getComputedStyle(document.getElementById('player-monito')).getPropertyValue("bottom"));
+                if (cp > 230 && cp < 265 && pb < 35) { alert("¡Chocaste! Puntos: " + puntos); puntos = 0; s.innerText = "0"; cp = -50; }
             }, 20);
         }
 
+        // --- LÓGICA DE TIENDA ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Usuario
             const nombre = localStorage.getItem('usuarioLogueado');
             if (localStorage.getItem('isLoggedIn') === 'true' && nombre) {
                 document.getElementById('user-link').innerHTML = `<span style="color: white; font-weight: bold; font-size: 13px;">Hola, ${nombre}</span>`;
             }
-            window.addEventListener('offline', () => { abrirJuego(); });
-            document.addEventListener('keydown', (e) => { if(e.code === "Space") { e.preventDefault(); saltar(); } });
-            document.getElementById('offline-game-container').addEventListener('touchstart', (e) => { if(e.target.tagName !== 'BUTTON') { e.preventDefault(); saltar(); } }, {passive: false});
 
             // Carrito
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
             const badge = document.getElementById('cart-count');
             const updateBadge = () => { badge.innerText = carrito.reduce((s, i) => s + i.cantidad, 0); };
+            updateBadge();
 
             document.querySelectorAll('.btn-cart').forEach(b => {
                 b.addEventListener('click', () => {
-                    const n = b.getAttribute('data-name');
-                    const p = parseInt(b.getAttribute('data-price'));
+                    const n = b.getAttribute('data-name'), p = parseInt(b.getAttribute('data-price'));
                     const ex = carrito.find(i => i.nombre === n);
                     if(ex) ex.cantidad++; else carrito.push({nombre:n, precio:p, cantidad:1});
                     localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -236,17 +222,43 @@
                 });
             });
 
+            // --- FAVORITOS (CORREGIDO) ---
+            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+            // 1. Al cargar, marcar los que ya son favoritos
+            document.querySelectorAll('.btn-wishlist').forEach(b => {
+                const nombreProducto = b.getAttribute('data-name');
+                if (favoritos.includes(nombreProducto)) {
+                    b.classList.add('active');
+                    b.innerHTML = '<i class="fa-solid fa-heart"></i>'; // Corazón lleno
+                }
+            });
+
+            // 2. Lógica de clic (Quitar/Poner)
             document.querySelectorAll('.btn-wishlist').forEach(b => {
                 b.addEventListener('click', () => {
                     const n = b.getAttribute('data-name');
-                    if (!favoritos.find(i => i.nombre === n)) {
-                        favoritos.push({ nombre: n });
-                        localStorage.setItem('favoritos', JSON.stringify(favoritos));
-                        b.style.backgroundColor = "#ff6b6b"; b.style.color = "white";
+                    const index = favoritos.indexOf(n);
+
+                    if (index === -1) {
+                        // No es favorito, añadir
+                        favoritos.push(n);
+                        b.classList.add('active');
+                        b.innerHTML = '<i class="fa-solid fa-heart"></i>';
+                    } else {
+                        // Ya es favorito, quitar
+                        favoritos.splice(index, 1);
+                        b.classList.remove('active');
+                        b.innerHTML = '<i class="fa-regular fa-heart"></i>'; // Corazón vacío
                     }
+                    localStorage.setItem('favoritos', JSON.stringify(favoritos));
                 });
             });
-            updateBadge();
+
+            // Eventos Juego
+            window.addEventListener('offline', () => abrirJuego());
+            document.addEventListener('keydown', e => { if(e.code === "Space") { e.preventDefault(); saltar(); }});
+            document.getElementById('offline-game-container').addEventListener('touchstart', e => { if(e.target.tagName !== 'BUTTON') { e.preventDefault(); saltar(); } }, {passive: false});
         });
     </script>
 </body>
