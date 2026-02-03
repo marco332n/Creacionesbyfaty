@@ -19,17 +19,25 @@
         </div>
 
         <div class="right-group">
-            <div class="search-container">
+            <div class="search-wrapper">
                 <input type="text" id="buscador" placeholder="Buscar ..." class="search-input">
+                <button id="btn-buscar" class="search-icon-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </div>
+
             <div class="icons-container icons-row">
                 <a href="login.html" class="icon-link" id="user-link">
                     <i class="fa-regular fa-user"></i>
                 </a>
-                <i class="fa-solid fa-location-dot"></i>
+
+                <a href="https://goo.gl/maps/uytQGQUzdPxbK42b9" class="icon-link" target="_blank">
+                    <i class="fa-solid fa-location-dot"></i>
+                </a>
+
                 <div class="cart-wrapper">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="cart-badge"></span>
+                    <span class="cart-badge">0</span>
                 </div>
             </div>
         </div>
@@ -48,12 +56,13 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- LÓGICA DE LOGIN ---
         const logueado = localStorage.getItem('isLoggedIn');
         const nombre = localStorage.getItem('usuarioLogueado');
-        const userLink = document.querySelector('.icon-link');
+        const userLink = document.getElementById('user-link');
 
         if (logueado === 'true' && nombre && userLink) {
-            userLink.innerHTML = `<span style="color: white; font-weight: bold; font-size: 14px;">Hola, ${nombre}</span>`;
+            userLink.innerHTML = `<span style="color: white; font-weight: bold; font-size: 14px; white-space: nowrap;">Hola, ${nombre}</span>`;
             userLink.href = "#"; 
             userLink.onclick = (e) => {
                 e.preventDefault();
@@ -64,7 +73,9 @@
             };
         }
 
+        // --- LÓGICA DEL BUSCADOR ---
         const inputBuscador = document.getElementById('buscador');
+        const btnBuscar = document.getElementById('btn-buscar');
         const misProductos = [
             { nombre: "moño con aplique de nombre", url: "disponibles.html#monos-ninos" },
             { nombre: "moños para niños", url: "disponibles.html#monos-ninos" },
@@ -73,15 +84,24 @@
             { nombre: "zapatillas para adultos", url: "disponibles.html#zapatillas-adultos" }
         ];
 
-        inputBuscador.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const texto = inputBuscador.value.toLowerCase();
+        function ejecutarBusqueda() {
+            const texto = inputBuscador.value.toLowerCase().trim();
+            if (texto !== "") {
                 const encontrado = misProductos.find(p => p.nombre.toLowerCase().includes(texto));
                 window.location.href = encontrado ? encontrado.url : "disponibles.html";
             }
+        }
+
+        // Buscar al presionar Enter
+        inputBuscador.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                ejecutarBusqueda();
+            }
         });
+
+        // Buscar al hacer clic en la lupa
+        btnBuscar.addEventListener('click', ejecutarBusqueda);
     });
 </script>
 </body>
-
 </html>
