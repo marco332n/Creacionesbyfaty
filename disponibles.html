@@ -161,63 +161,135 @@
 </section>
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- USUARIO ---
-            const logueado = localStorage.getItem('isLoggedIn');
-            const nombre = localStorage.getItem('usuarioLogueado');
-            if (logueado === 'true' && nombre) {
-                document.getElementById('user-link').innerHTML = `<span style="color: white; font-weight: bold; font-size: 13px;">Hola, ${nombre}</span>`;
+<script>
+    // --- VARIABLES GLOBALES DEL JUEGO ---
+    let score = 0;
+    let isJumping = false;
+
+    // --- FUNCIONES DEL JUEGO (Afuera para que funcionen bien) ---
+    function jump() {
+        const player = document.getElementById('player-monito');
+        if (isJumping || !player) return;
+        isJumping = true;
+        player.style.bottom = "80px"; 
+        setTimeout(() => {
+            player.style.bottom = "0";
+            isJumping = false;
+        }, 300);
+    }
+
+    function startGame() {
+        const cactus = document.getElementById('cactus');
+        const player = document.getElementById('player-monito');
+        const scoreText = document.getElementById('score-text');
+        score = 0;
+        let cactusPos = -50;
+        
+        let gameLoop = setInterval(() => {
+            if (document.getElementById('offline-game-container').style.display === 'none') {
+                clearInterval(gameLoop); // Detener si vuelve el internet
+                return;
             }
 
-            // --- CARRITO Y FAVORITOS ---
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-            const badge = document.getElementById('cart-count');
-
-            function actualizarBadge() {
-                badge.innerText = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            cactusPos += 5; 
+            if (cactusPos > 350) {
+                cactusPos = -50;
+                score++;
+                scoreText.innerText = "Puntos: " + score;
             }
+            cactus.style.right = cactusPos + "px";
 
-            // Función añadir al carrito
-            document.querySelectorAll('.btn-cart').forEach(boton => {
-                boton.addEventListener('click', () => {
-                    const nombreProd = boton.getAttribute('data-name');
-                    const precioProd = parseInt(boton.getAttribute('data-price'));
-                    const existente = carrito.find(p => p.nombre === nombreProd);
+            let playerBottom = parseInt(window.getComputedStyle(player).getPropertyValue("bottom"));
+            if (cactusPos > 240 && cactusPos < 280 && playerBottom < 30) {
+                alert("¡Oh no! Chocaste. Puntos finales: " + score);
+                score = 0;
+                scoreText.innerText = "Puntos: 0";
+                cactusPos = -50;
+            }
+        }, 20);
+    }
 
-                    if (existente) { existente.cantidad++; } 
-                    else { carrito.push({ nombre: nombreProd, precio: precioProd, cantidad: 1 }); }
-
-                    localStorage.setItem('carrito', JSON.stringify(carrito));
-                    actualizarBadge();
-                    boton.innerText = "¡Añadido! ✓";
-                    setTimeout(() => boton.innerText = "Añadir al Carrito", 1000);
-                });
-            });
-
-            // Función añadir a favoritos (CORAZÓN)
-            document.querySelectorAll('.btn-wishlist').forEach(boton => {
-                boton.addEventListener('click', () => {
-                    const nombreProd = boton.getAttribute('data-name');
-                    const precioProd = parseInt(boton.getAttribute('data-price'));
-                    
-                    if (!favoritos.find(p => p.nombre === nombreProd)) {
-                        favoritos.push({ nombre: nombreProd, precio: precioProd });
-                        localStorage.setItem('favoritos', JSON.stringify(favoritos));
-                        
-                        // Efecto visual
-                        boton.innerHTML = '<i class="fa-solid fa-heart"></i>';
-                        boton.style.backgroundColor = "#ff6b6b";
-                        boton.style.color = "white";
-                    } else {
-                        alert("Este producto ya está en tus favoritos.");
-                    }
-                });
-            });
-
-            actualizarBadge();
+    // --- LÓGICA PRINCIPAL AL CARGAR LA PÁGINA ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- MANEJO DE CONEXIÓN ---
+        const gameContainer = document.getElementById('offline-game-container');
+        
+        window.addEventListener('offline', () => {
+            gameContainer.style.display = 'block';
+            startGame();
         });
-    </script>
+
+        window.addEventListener('online', () => {
+            gameContainer.style.display = 'none';
+        });
+
+        // Controles
+        document.addEventListener('keydown', (e) => { if(e.code === "Space") jump(); });
+        gameContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Evita zoom al tocar rápido
+            jump();
+        });
+
+        // --- CARRITO, USUARIO Y FAVORITOS (Tu código anterior) ---
+        const logueado = localStorage.getItem('isLoggedIn');
+        const nombre = localStorage.getItem('usuarioLogueado');
+        if (logueado === 'true' && nombre) {
+            document.getElementById('user-link').innerHTML = `<span style="color: white; font-weight: bold; font-size: 13px;">Hola, ${nombre}</span>`;
+        }
+
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+        const badge = document.getElementById('cart-count');
+
+        function actualizarBadge() {
+            badge.innerText = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+        }
+
+        document.querySelectorAll('.btn-cart').forEach(boton => {
+            boton.addEventListener('click', () => {
+                const nombreProd = boton.getAttribute('data-name');
+                const precioProd = parseInt(boton.getAttribute('data-price'));
+                const existente = carrito.find(p => p.nombre === nombreProd);
+                if (existente) { existente.cantidad++; } 
+                else { carrito.push({ nombre: nombreProd, precio: precioProd, cantidad: 1 }); }
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+                actualizarBadge();
+                boton.innerText = "¡Añadido! ✓";
+                setTimeout(() => boton.innerText = "Añadir al Carrito", 1000);
+            });
+        });
+
+        document.querySelectorAll('.btn-wishlist').forEach(boton => {
+            boton.addEventListener('click', () => {
+                const nombreProd = boton.getAttribute('data-name');
+                const precioProd = parseInt(boton.getAttribute('data-price'));
+                if (!favoritos.find(p => p.nombre === nombreProd)) {
+                    favoritos.push({ nombre: nombreProd, precio: precioProd });
+                    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+                    boton.innerHTML = '<i class="fa-solid fa-heart"></i>';
+                    boton.style.backgroundColor = "#ff6b6b";
+                    boton.style.color = "white";
+                } else {
+                    alert("Este producto ya está en tus favoritos.");
+                }
+            });
+        });
+
+        actualizarBadge();
+    });
+</script>
+    <div id="offline-game-container" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#f3eaff; z-index:9999; text-align:center; padding-top:50px; font-family:sans-serif;">
+    <h2 style="color:#435D78;">¡Ups! Te quedaste sin conexión</h2>
+    <p style="color:#666;">Mientras vuelve el internet, ¡ayuda al moño a saltar!</p>
+    <div id="game-canvas" style="width:300px; height:150px; border-bottom:3px solid #435D78; margin:50px auto; position:relative; overflow:hidden; background: white; border-radius: 10px;">
+        <div id="player-monito" style="width:40px; height:40px; position:absolute; bottom:0; left:20px; transition: bottom 0.3s;">
+            <img src="logotipo.png.png" style="width:100%; height:100%; object-fit:contain;">
+        </div>
+        <div id="cactus" style="width:20px; height:30px; background:#435D78; position:absolute; bottom:0; right:-50px; border-radius: 5px 5px 0 0;"></div>
+    </div>
+    <p>Toca la pantalla o presiona <b>Espacio</b> para saltar</p>
+    <p id="score-text" style="font-weight:bold; color:#d1acff;">Puntos: 0</p>
+    <button onclick="location.reload()" style="margin-top:20px; padding:10px 20px; background:#435D78; color:white; border:none; border-radius:20px;">Reintentar conexión</button>
+</div>
 </body>
 </html>
