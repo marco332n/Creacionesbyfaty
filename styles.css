@@ -312,6 +312,37 @@ main {
     transform: scale(1.03);
 }
 .onda {
-  background: linear-gradient(to right, #ccc, #eee);
+    background: linear-gradient(to right, #ccc, #eee);
   clip-path: ellipse(100% 50% at 50% 0%); /* Crea una curva simple */
+}
+/* Esto se activa solo en pantallas menores a 768px (celulares) */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column; /* Pone el logo arriba y el resto abajo */
+        height: auto;
+        padding: 10px;
+    }
+
+    .logo-wrapper {
+        margin-bottom: 15px; /* Separa el logo del buscador */
+    }
+
+    .right-group {
+        width: 100%;
+        flex-direction: column; /* Buscador arriba e iconos abajo */
+        gap: 15px;
+    }
+
+    .search-container {
+        width: 100%; /* El buscador ocupa todo el ancho */
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .icons-container {
+        justify-content: space-around; /* Reparte los iconos a lo ancho */
+        width: 100%;
+    }
 }
