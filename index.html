@@ -5,23 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina Principal</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
+<header>
+    <div class="header-content">
+        <div class="logo-wrapper">
             <img src="logotipo.png.png" alt="Logo Accesorios by Faty">
             <div class="title-container">
                 <h1>Accesorios</h1>
                 <h2>by faty</h2>
             </div>
         </div>
-        <nav>
-            <ul class="menu">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="#menu">Menú</a></li>
-                <li><a href="disponibles.html">Disponibles</a></li>
-            </ul>
-        </nav>
-    </header>
+
+        <div class="right-group">
+            <div class="search-container">
+                <input type="text" id="buscador" placeholder="Buscar ..." class="search-input">
+            </div>
+            <div class="icons-container">
+                <a href="login.html" class="icon-link" id="user-link">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <i class="fa-solid fa-location-dot"></i>
+                <div class="cart-wrapper">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="sub-menu">
+        <ul class="menu">
+            <li><a href="#menu">Menú ></a></li>
+            <li><a href="disponibles.html">Disponibles ></a></li>
+        </ul>
+    </nav>
+</header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- LOGICA DE SESIÓN ---
+        const logueado = localStorage.getItem('isLoggedIn');
+        const nombre = localStorage.getItem('usuarioLogueado');
+        const userLink = document.querySelector('.icon-link');
+
+        if (logueado === 'true' && nombre && userLink) {
+            userLink.innerHTML = `<span style="color: white; font-weight: bold; font-size: 14px; text-decoration: none;">Hola, ${nombre}</span>`;
+            userLink.href = "#"; 
+            userLink.onclick = () => {
+                if(confirm("¿Quieres cerrar sesión?")) {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('usuarioLogueado');
+                    location.reload();
+                }
+            };
+        }
+
+        // --- LOGICA DEL BUSCADOR (PRODUCTOS REALES) ---
+        const inputBuscador = document.getElementById('buscador');
+        
+        // Aquí están los productos que tienes en tu disponibles.html
+        const misProductos = [
+            { nombre: "moño con aplique de nombre", url: "disponibles.html#monos-ninos" },
+            { nombre: "moños para niños", url: "disponibles.html#monos-ninos" },
+            { nombre: "moños para adultos", url: "disponibles.html#monos-adultos" },
+            { nombre: "zapatillas para niños", url: "disponibles.html#zapatillas-ninos" },
+            { nombre: "zapatillas para adultos", url: "disponibles.html#zapatillas-adultos" }
+        ];
+
+        inputBuscador.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const texto = inputBuscador.value.toLowerCase();
+                
+                // Buscamos si el nombre coincide con lo que el usuario escribió
+                const encontrado = misProductos.find(p => p.nombre.toLowerCase().includes(texto));
+
+                if (encontrado) {
+                    window.location.href = encontrado.url;
+                } else {
+                    alert("No encontramos '" + texto + "', pero puedes ver todo en Disponibles.");
+                    window.location.href = "disponibles.html";
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

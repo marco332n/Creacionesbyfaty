@@ -7,13 +7,76 @@ body {
 header {
     background-color: #d1acff;
 }
+.icon-link {
+    text-decoration: none;
+    color: inherit; /* Mantiene el color blanco que ya tenías */
+    cursor: pointer;
+}
 
+.icon-link:hover {
+    color: #fcfcfc; /* Un color un poco distinto cuando pasan el mouse */
+    transform: scale(1.1); /* Se agranda un poquito */
+}
+/* El contenedor principal que ahora separa el logo de los iconos */
 .header-content {
     display: flex;
+    justify-content: space-between; /* Empuja logo a la izquierda y el resto a la derecha */
     align-items: center;
-    justify-content: center;
-    padding: 15px 20px;
+    padding: 15px 40px; /* 40px de espacio en los bordes */
+    background-color: #d1acff; /* El color lila del fondo */
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
     gap: 15px;
+}
+
+/* Este grupo contiene el buscador y los iconos pegados */
+.right-group {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-left: auto; /* Refuerzo para empujar a la derecha */
+}
+
+.search-input {
+    width: 400px; /* Ajusta el largo aquí */
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid white;
+    outline: none;
+}
+
+.icons-container {
+    display: flex;
+    gap: 20px;
+    color: white;
+    font-size: 22px;
+}
+
+.cart-wrapper {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #b88ee6; 
+    color: black;
+    font-size: 11px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* El menú blanco de abajo */
+.sub-menu {
+    background-color: #fcfcfc;
 }
 
 header img {
@@ -44,7 +107,7 @@ h2 {
 }
 
 nav {
-    background-color: #b88ee6;
+    background-color: #fcfcfc;
     padding: 0;
 }
 
@@ -53,7 +116,7 @@ nav {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     gap: 30px;
 }
 
@@ -64,7 +127,7 @@ nav {
 .menu a {
     text-decoration: none;
     color: #435D78;
-    font-size: 18px;
+    font-size: 11px;
     font-weight: 300;
     padding: 10px 20px;
     border-radius: 5px;
@@ -72,7 +135,7 @@ nav {
 }
 
 .menu a:hover {
-    background-color: #d1acff;
+    background-color: #f5ecff;
 }
 
 /* Estilos para la página de Disponibles */
@@ -247,4 +310,8 @@ main {
 .btn-whatsapp:hover {
     background-color: #128C7E;
     transform: scale(1.03);
+}
+.onda {
+  background: linear-gradient(to right, #ccc, #eee);
+  clip-path: ellipse(100% 50% at 50% 0%); /* Crea una curva simple */
 }

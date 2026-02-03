@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - Accesorios by Faty</title>
+    <link rel="stylesheet" href="styles2.css"> 
+</head>
+<body>
+    <div class="login-container">
+        <form class="login-form" id="formularioRegistro">
+            <h2>Crear Cuenta</h2>
+            <p>Regístrate para comprar tus accesorios</p>
+            <div class="input-group">
+                <label>Correo Electrónico</label>
+                <input type="email" id="regEmail" required>
+            </div>
+            <div class="input-group">
+                <label>Crea tu Contraseña</label>
+                <input type="password" id="regPass" required>
+            </div>
+            <button type="submit" class="btn-login">Registrarse</button>
+            <a href="login.html" class="back-link">¿Ya tienes cuenta? Inicia sesión</a>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('formularioRegistro').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+
+            // Obtenemos los usuarios que ya existan o creamos una lista vacía
+            let usuarios = JSON.parse(localStorage.getItem('usuariosRegistrados')) || {};
+
+            // Guardamos el nuevo usuario
+            usuarios[email] = pass;
+            localStorage.setItem('usuariosRegistrados', JSON.stringify(usuarios));
+
+            alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
