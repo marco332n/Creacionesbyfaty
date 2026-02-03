@@ -34,45 +34,45 @@ header {
 /* --- NUEVO BUSCADOR --- */
 .right-group { display: flex; align-items: center; gap: 20px; }
 
+/* Contenedor principal del buscador */
 .search-wrapper {
-    position: relative;
+    position: relative; /* Esto es como un ancla para la lupa */
     display: flex;
     align-items: center;
+    width: 100%;
+    max-width: 200px; /* Tamaño ideal para móvil y PC */
 }
 
+/* El campo de texto */
 .search-input {
-    width: 180px;
-    padding: 8px 35px 8px 15px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.5);
+    width: 100%;
+    padding: 8px 35px 8px 15px; /* Dejamos 35px a la derecha para que el texto no tape la lupa */
+    border-radius: 25px;
+    border: none;
     outline: none;
     font-size: 14px;
-    transition: all 0.3s ease;
-    background: white;
+    background-color: white;
 }
 
-/* Efecto al hacer clic en buscar */
-.search-input:focus {
-    width: 220px;
-    border-color: #435D78;
-    box-shadow: 0 0 5px rgba(67, 93, 120, 0.2);
-}
-
+/* La lupa: ahora sí quedará fija adentro */
 .search-icon-btn {
-    position: absolute;
-    right: 5px;
+    position: absolute; /* Esto la obliga a quedarse dentro del buscador */
+    right: 10px;        /* A 10 pixeles del borde derecho */
     background: none;
     border: none;
-    color: #d1acff; /* Color lila para resaltar sobre el blanco */
+    color: #435D78;     /* Color oscuro para que se vea bien */
     cursor: pointer;
-    padding: 5px;
-    font-size: 14px;
-    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    height: 100%;       /* Para que esté centrada verticalmente */
 }
 
-.search-icon-btn:hover {
-    transform: scale(1.2);
-    color: #435D78;
+/* Quitemos cualquier borde feo que ponga el navegador por defecto */
+.search-icon-btn:focus, .search-icon-btn:active {
+    outline: none;
+    border: none;
 }
 
 /* Iconos y Carrito */
