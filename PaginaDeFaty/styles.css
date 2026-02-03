@@ -1,0 +1,250 @@
+body {
+    margin: 0;
+    background-color: #ffefef;
+    font-family: sans-serif;
+}
+
+header {
+    background-color: #d1acff;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    gap: 15px;
+}
+
+header img {
+    width: 60px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+h1 {
+    margin: 0;
+    font-weight: 100;
+    color: #435D78;
+    font-size: 30px;
+}
+
+h2 {
+    margin: 0;
+    padding-left: 20px;
+    font-weight: 100;
+    color: #435D78;
+    font-size: 19px;
+}
+
+nav {
+    background-color: #b88ee6;
+    padding: 0;
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.menu li {
+    padding: 15px 0;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #435D78;
+    font-size: 18px;
+    font-weight: 300;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #d1acff;
+}
+
+/* Estilos para la página de Disponibles */
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    color: #435D78;
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 40px;
+}
+
+.categories-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.category-card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.category-card h4 {
+    text-align: center;
+    color: #435D78;
+    font-size: 26px;
+    font-weight: 400;
+    margin: 0 0 25px 0;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #d1acff;
+}
+
+.subcategories {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.subcategory-btn {
+    text-decoration: none;
+    background-color: #d1acff;
+    color: #435D78;
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 300;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.subcategory-btn:hover {
+    background-color: #b88ee6;
+    transform: scale(1.05);
+}
+
+/* Estilos para la sección de productos */
+.products-section {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid #d1acff;
+}
+
+.products-title {
+    text-align: center;
+    color: #435D78;
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 40px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0;
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.product-info h5 {
+    margin: 0 0 15px 0;
+    color: #435D78;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.product-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-cart {
+    background-color: #d1acff;
+    color: #435D78;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-cart:hover {
+    background-color: #b88ee6;
+    transform: scale(1.03);
+}
+
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    transform: scale(1.03);
+}
