@@ -7,31 +7,44 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Estilos de botones y alineación */
+        /* Estilo para los botones alineados */
         .cart-row { display: flex; gap: 8px; margin-bottom: 10px; }
-        .btn-cart { flex: 1; }
+        .btn-cart { flex: 1; } 
+        
         .btn-wishlist {
             background-color: white; border: 2px solid #ff6b6b; color: #ff6b6b;
             padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: 0.3s;
         }
         .btn-wishlist:hover { background-color: #ff6b6b; color: white; }
 
-        /* Estilos del Juego Offline */
+        /* EL BOTÓN DE JUGAR */
+        .game-launcher-container { text-align: center; margin: 20px 0; }
+        .btn-open-game {
+            background: #d1acff; color: white; border: none; padding: 12px 25px;
+            border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+        .btn-open-game:hover { background: #b085f5; transform: scale(1.05); }
+
+        /* AJUSTE PARA MÓVIL */
+        @media (max-width: 480px) { .cart-row { flex-direction: row; } }
+
+        /* PANTALLA DEL JUEGO */
         #offline-game-container {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #f3eaff; z-index: 10000; text-align: center; padding-top: 50px;
         }
         #game-canvas {
             width: 300px; height: 150px; border-bottom: 3px solid #435D78;
-            margin: 50px auto; position: relative; overflow: hidden; background: white; border-radius: 10px;
+            margin: 30px auto; position: relative; overflow: hidden; background: white; border-radius: 10px;
         }
         #player-monito {
-            width: 40px; height: 40px; position: absolute; bottom: 0; left: 20px;
-            transition: bottom 0.2s ease-out;
+            width: 45px; height: 45px; position: absolute; bottom: 0; left: 30px;
+            transition: bottom 0.3s ease-in-out;
         }
         #cactus {
-            width: 20px; height: 30px; background: #435D78;
-            position: absolute; bottom: 0; right: -50px; border-radius: 5px 5px 0 0;
+            width: 25px; height: 35px; background: #ff6b6b;
+            position: absolute; bottom: 0; right: -50px; border-radius: 5px;
         }
     </style>
 </head>
@@ -63,6 +76,12 @@
 
     <main>
         <h3 class="section-title">Productos Disponibles</h3>
+
+        <div class="game-launcher-container">
+            <button class="btn-open-game" onclick="abrirJuego()">
+                <i class="fa-solid fa-gamepad"></i> ¡Jugar Mini Juego!
+            </button>
+        </div>
         
         <section id="monos-ninos" class="products-section">
             <h3 class="products-title">Moños para Niños</h3>
@@ -143,77 +162,68 @@
     </main>
 
     <div id="offline-game-container">
-        <h2 style="color:#435D78;">¡Ups! Sin conexión</h2>
-        <p>¡Ayuda al moño a saltar mientras vuelve el internet!</p>
+        <h2 style="color:#435D78;">Mini Juego Faty</h2>
         <div id="game-canvas">
-            <div id="player-monito"><img src="logotipo.png.png" style="width:100%;"></div>
+            <div id="player-monito"><img src="logotipo.png.png" style="width:100%; height:100%;"></div>
             <div id="cactus"></div>
         </div>
-        <p id="score-text" style="font-weight:bold;">Puntos: 0</p>
-        <button onclick="location.reload()" style="padding:10px 20px; background:#435D78; color:white; border:none; border-radius:10px; cursor:pointer;">Reintentar conexión</button>
+        <div style="font-size: 24px; font-weight: bold; color: #435D78; margin: 15px 0;">
+            PUNTOS: <span id="score-val">0</span>
+        </div>
+        <button onclick="cerrarJuego()" style="padding:12px 25px; background:#435D78; color:white; border:none; border-radius:20px; cursor:pointer;">Volver a la Tienda</button>
     </div>
 
     <script>
-        let score = 0;
-        let isJumping = false;
-        let gameActive = false;
+        let puntos = 0;
+        let saltando = false;
+        let juegoActivo = false;
+        let bucleJuego;
 
-        function jump() {
+        function abrirJuego() { document.getElementById('offline-game-container').style.display = 'block'; iniciarJuego(); }
+        function cerrarJuego() { document.getElementById('offline-game-container').style.display = 'none'; clearInterval(bucleJuego); juegoActivo = false; }
+
+        function saltar() {
             const player = document.getElementById('player-monito');
-            if (isJumping || !player) return;
-            isJumping = true;
-            player.style.bottom = "80px";
-            setTimeout(() => { if(player) player.style.bottom = "0"; isJumping = false; }, 400);
+            if (saltando || !player) return;
+            saltando = true;
+            player.style.bottom = "90px";
+            setTimeout(() => { if(player) player.style.bottom = "0"; setTimeout(() => { saltando = false; }, 300); }, 400);
         }
 
-        function startGame() {
-            if (gameActive) return;
-            gameActive = true;
+        function iniciarJuego() {
+            if (juegoActivo) return;
+            juegoActivo = true;
             const cactus = document.getElementById('cactus');
-            const scoreText = document.getElementById('score-text');
+            const scoreVal = document.getElementById('score-val');
+            puntos = 0; scoreVal.innerText = "0";
             let cactusPos = -50;
-            
-            let gameLoop = setInterval(() => {
-                if (document.getElementById('offline-game-container').style.display === 'none') {
-                    clearInterval(gameLoop);
-                    gameActive = false;
-                    return;
-                }
-                cactusPos += 6; 
-                if (cactusPos > 330) { cactusPos = -50; score++; scoreText.innerText = "Puntos: " + score; }
+            bucleJuego = setInterval(() => {
+                cactusPos += 6;
+                if (cactusPos > 330) { cactusPos = -50; puntos++; scoreVal.innerText = puntos; }
                 cactus.style.right = cactusPos + "px";
-
                 let playerBottom = parseInt(window.getComputedStyle(document.getElementById('player-monito')).getPropertyValue("bottom"));
-                if (cactusPos > 240 && cactusPos < 275 && playerBottom < 35) {
-                    alert("¡Chocaste! Puntos: " + score);
-                    score = 0; scoreText.innerText = "Puntos: 0"; cactusPos = -50;
+                if (cactusPos > 230 && cactusPos < 265 && playerBottom < 35) {
+                    alert("¡Chocaste! Puntos: " + puntos);
+                    puntos = 0; scoreVal.innerText = "0"; cactusPos = -50;
                 }
             }, 20);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const gameContainer = document.getElementById('offline-game-container');
-            
-            // Detectar Conexión
-            window.addEventListener('offline', () => { gameContainer.style.display = 'block'; startGame(); });
-            window.addEventListener('online', () => { gameContainer.style.display = 'none'; });
-
-            // Controles Juego
-            document.addEventListener('keydown', (e) => { if(e.code === "Space") jump(); });
-            gameContainer.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); });
-
-            // --- Lógica Carrito y Usuario ---
             const nombre = localStorage.getItem('usuarioLogueado');
             if (localStorage.getItem('isLoggedIn') === 'true' && nombre) {
                 document.getElementById('user-link').innerHTML = `<span style="color: white; font-weight: bold; font-size: 13px;">Hola, ${nombre}</span>`;
             }
+            window.addEventListener('offline', () => { abrirJuego(); });
+            document.addEventListener('keydown', (e) => { if(e.code === "Space") { e.preventDefault(); saltar(); } });
+            document.getElementById('offline-game-container').addEventListener('touchstart', (e) => { if(e.target.tagName !== 'BUTTON') { e.preventDefault(); saltar(); } }, {passive: false});
 
+            // Carrito
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
             const badge = document.getElementById('cart-count');
             const updateBadge = () => { badge.innerText = carrito.reduce((s, i) => s + i.cantidad, 0); };
 
-            // Añadir al carrito
             document.querySelectorAll('.btn-cart').forEach(b => {
                 b.addEventListener('click', () => {
                     const n = b.getAttribute('data-name');
@@ -226,20 +236,16 @@
                 });
             });
 
-            // Añadir a Favoritos
             document.querySelectorAll('.btn-wishlist').forEach(b => {
                 b.addEventListener('click', () => {
                     const n = b.getAttribute('data-name');
-                    const p = parseInt(b.getAttribute('data-price'));
                     if (!favoritos.find(i => i.nombre === n)) {
-                        favoritos.push({ nombre: n, precio: p });
+                        favoritos.push({ nombre: n });
                         localStorage.setItem('favoritos', JSON.stringify(favoritos));
-                        b.innerHTML = '<i class="fa-solid fa-heart"></i>';
                         b.style.backgroundColor = "#ff6b6b"; b.style.color = "white";
-                    } else { alert("Ya está en favoritos"); }
+                    }
                 });
             });
-
             updateBadge();
         });
     </script>
