@@ -1,348 +1,308 @@
-body {
+/* --- CONFIGURACIÓN BASE --- */
+* {
+    box-sizing: border-box;
     margin: 0;
-    background-color: #ffefef;
-    font-family: sans-serif;
+    padding: 0;
 }
 
-header {
-    background-color: #d1acff;
-}
-.icon-link {
-    text-decoration: none;
-    color: inherit; /* Mantiene el color blanco que ya tenías */
-    cursor: pointer;
+body {
+    background-color: #fff5f5;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
 }
 
-.icon-link:hover {
-    color: #fcfcfc; /* Un color un poco distinto cuando pasan el mouse */
-    transform: scale(1.1); /* Se agranda un poquito */
+/* --- HEADER (LILA) --- */
+header { 
+    background-color: #d1acff; 
+    width: 100%; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
-/* El contenedor principal que ahora separa el logo de los iconos */
+
 .header-content {
     display: flex;
-    justify-content: space-between; /* Empuja logo a la izquierda y el resto a la derecha */
+    justify-content: space-between;
     align-items: center;
-    padding: 15px 40px; /* 40px de espacio en los bordes */
-    background-color: #d1acff; /* El color lila del fondo */
+    padding: 10px 5%; /* Un poco menos de padding para dar espacio */
+    min-height: 80px;
+    flex-wrap: nowrap; /* Evita saltos de línea bruscos en PC */
 }
 
-.logo-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.logo-wrapper { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    flex-shrink: 0;
 }
 
-/* Este grupo contiene el buscador y los iconos pegados */
+header img { width: 55px; height: auto; }
+
+.title-container h1 {
+    color: #435D78;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.title-container h2 {
+    color: #435D78;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+/* --- GRUPO DERECHA (BUSCADOR E ICONOS) --- */
 .right-group {
     display: flex;
     align-items: center;
-    gap: 25px;
-    margin-left: auto; /* Refuerzo para empujar a la derecha */
+    gap: 15px; /* Reducido para que quepa todo en una línea */
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 250px; /* Tamaño controlado para no empujar iconos */
 }
 
 .search-input {
-    width: 400px; /* Ajusta el largo aquí */
+    width: 100%;
     padding: 8px 15px;
-    border-radius: 20px;
-    border: 2px solid white;
+    border-radius: 25px;
+    border: none;
     outline: none;
+    font-size: 14px;
 }
 
-.icons-container {
+/* ARREGLO FINAL DE ICONOS */
+.icons-container { 
+    display: flex; 
+    gap: 15px; 
+    color: white; 
+    font-size: 20px;
+    align-items: center; /* ESTO ALINEA LA UBICACIÓN PERFECTAMENTE */
+    flex-shrink: 0;
+}
+
+.icons-container i, .icons-container a {
     display: flex;
-    gap: 20px;
-    color: white;
-    font-size: 22px;
-}
-
-.cart-wrapper {
-    position: relative;
-}
-
-.cart-badge {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: #b88ee6; 
-    color: black;
-    font-size: 11px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    height: 32px;
+    line-height: 1;
 }
 
-/* El menú blanco de abajo */
-.sub-menu {
-    background-color: #fcfcfc;
-}
-
-header img {
-    width: 60px;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-.title-container {
+/* Especial para el carrito y el número 0 */
+.cart-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    gap: 4px;
 }
 
-h1 {
-    margin: 0;
-    font-weight: 100;
-    color: #435D78;
-    font-size: 30px;
+.cart-count {
+    font-size: 14px;
+    font-weight: bold;
 }
 
-h2 {
-    margin: 0;
-    padding-left: 20px;
-    font-weight: 100;
-    color: #435D78;
-    font-size: 19px;
-}
-
-nav {
-    background-color: #fcfcfc;
-    padding: 0;
+/* --- MENÚ BLANCO --- */
+.sub-menu { 
+    background-color: #ffffff; 
+    border-bottom: 2px solid #f0e6ff;
 }
 
 .menu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    list-style: none; 
+    display: flex; 
+    justify-content: center;
+    padding: 10px; 
+    gap: 25px;
+}
+
+.menu a { 
+    text-decoration: none; 
+    color: #435D78; 
+    font-size: 13px; 
+    font-weight: 600;
+}
+
+/* --- CUADRÍCULA DE PRODUCTOS --- */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px; 
+    padding: 20px;
+}
+
+.product-card {
+    background: white; 
+    border-radius: 15px; 
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.product-card:hover { transform: translateY(-5px); }
+
+.product-image {
+    width: 100%;
+    height: 200px;
     display: flex;
-    justify-content: left;
-    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 10px;
 }
 
-.menu li {
-    padding: 15px 0;
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Moños siempre perfectos */
 }
 
-.menu a {
-    text-decoration: none;
-    color: #435D78;
-    font-size: 11px;
-    font-weight: 300;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
+/* --- RESPONSIVE CELULAR (ARREGLO DEFINITIVO) --- */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px 5%;
+    }
 
-.menu a:hover {
-    background-color: #f5ecff;
-}
+    .right-group {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
 
-/* Estilos para la página de Disponibles */
-main {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    .search-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .icons-container {
+        width: 100%;
+        justify-content: space-evenly; /* Distribuye iconos parejos en cel */
+        padding-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.3);
+    }
 }
+/* --- ESTILOS DE CATEGORÍAS Y TÍTULOS (NUEVO) --- */
 
 .section-title {
     text-align: center;
     color: #435D78;
-    font-size: 32px;
-    font-weight: 300;
-    margin-bottom: 40px;
+    margin: 30px 0 20px;
+    font-size: 26px;
+    position: relative;
 }
 
+/* Contenedor de las tarjetas de categorías */
 .categories-container {
     display: flex;
-    gap: 30px;
     justify-content: center;
+    gap: 20px;
+    padding: 0 5% 30px;
     flex-wrap: wrap;
 }
 
 .category-card {
-    background-color: white;
-    border-radius: 15px;
-    padding: 30px;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.category-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(209, 172, 255, 0.2); /* Sombra lila suave */
+    min-width: 250px;
+    border: 1px solid #f0e6ff;
 }
 
 .category-card h4 {
-    text-align: center;
     color: #435D78;
-    font-size: 26px;
-    font-weight: 400;
-    margin: 0 0 25px 0;
-    padding-bottom: 15px;
+    margin-bottom: 15px;
+    font-size: 18px;
     border-bottom: 2px solid #d1acff;
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
+/* Botones de subcategoría (Niños/Adultos) */
 .subcategories {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    justify-content: center;
+    gap: 10px;
 }
 
 .subcategory-btn {
     text-decoration: none;
-    background-color: #d1acff;
-    color: #435D78;
-    padding: 15px 20px;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 300;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #fdfbff;
+    color: #d1acff;
+    padding: 8px 18px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #d1acff;
+    transition: all 0.3s ease;
 }
 
 .subcategory-btn:hover {
-    background-color: #b88ee6;
+    background-color: #d1acff;
+    color: white;
     transform: scale(1.05);
 }
 
-/* Estilos para la sección de productos */
-.products-section {
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 2px solid #d1acff;
-}
-
+/* Título de la sección de productos */
 .products-title {
-    text-align: center;
+    padding-left: 5%;
     color: #435D78;
-    font-size: 28px;
-    font-weight: 300;
-    margin-bottom: 40px;
-}
-
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    padding: 20px 0;
-}
-
-.product-card {
-    background-color: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.product-image {
-    width: 100%;
-    height: 280px;
-    overflow: hidden;
-    background-color: #f8f8f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    margin: 0;
-}
-
-.product-info {
-    padding: 20px;
-}
-
-.product-info h5 {
-    margin: 0 0 15px 0;
-    color: #435D78;
+    margin-top: 40px;
     font-size: 20px;
-    font-weight: 400;
-    text-align: center;
+    border-left: 5px solid #d1acff;
+    margin-bottom: 10px;
+}
+
+/* Botones dentro de la tarjeta de producto */
+.product-info h5 {
+    color: #435D78;
+    margin-bottom: 12px;
+    font-size: 16px;
 }
 
 .product-buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    padding: 10px;
 }
 
 .btn-cart {
     background-color: #d1acff;
-    color: #435D78;
+    color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 400;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background 0.3s;
 }
 
 .btn-cart:hover {
-    background-color: #b88ee6;
-    transform: scale(1.03);
+    background-color: #b38bff;
 }
 
 .btn-whatsapp {
+    text-decoration: none;
     background-color: #25D366;
     color: white;
-    text-decoration: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 400;
-    text-align: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 8px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
-.btn-whatsapp:hover {
-    background-color: #128C7E;
-    transform: scale(1.03);
-}
-.onda {
-    background: linear-gradient(to right, #ccc, #eee);
-  clip-path: ellipse(100% 50% at 50% 0%); /* Crea una curva simple */
-}
-/* Esto se activa solo en pantallas menores a 768px (celulares) */
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column; /* Pone el logo arriba y el resto abajo */
-        height: auto;
-        padding: 10px;
-    }
-
-    .logo-wrapper {
-        margin-bottom: 15px; /* Separa el logo del buscador */
-    }
-
-    .right-group {
-        width: 100%;
-        flex-direction: column; /* Buscador arriba e iconos abajo */
-        gap: 15px;
-    }
-
-    .search-container {
-        width: 100%; /* El buscador ocupa todo el ancho */
-    }
-
-    .search-input {
-        width: 100%;
-    }
-
-    .icons-container {
-        justify-content: space-around; /* Reparte los iconos a lo ancho */
-        width: 100%;
-    }
+/* Ajuste de imágenes para que los 5 moños se vean parejos */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

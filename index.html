@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina Principal</title>
+    <title>Accesorios by Faty</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -22,50 +22,50 @@
             <div class="search-container">
                 <input type="text" id="buscador" placeholder="Buscar ..." class="search-input">
             </div>
-            <div class="icons-container">
+            <div class="icons-container icons-row">
                 <a href="login.html" class="icon-link" id="user-link">
                     <i class="fa-regular fa-user"></i>
                 </a>
                 <i class="fa-solid fa-location-dot"></i>
                 <div class="cart-wrapper">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="cart-badge">0</span>
+                    <span class="cart-badge"></span>
                 </div>
             </div>
         </div>
-    </div>
-
+    </div> 
     <nav class="sub-menu">
         <ul class="menu">
-            <li><a href="#menu">Menú ></a></li>
+            <li><a href="index.html">Inicio ></a></li>
             <li><a href="disponibles.html">Disponibles ></a></li>
         </ul>
     </nav>
 </header>
 
+<main style="text-align: center; padding: 50px;">
+    <h2 style="color: #435D78;">¡Bienvenida a nuestra tienda!</h2>
+    <p>Explora nuestros productos exclusivos en la sección de Disponibles.</p>
+</main>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- LOGICA DE SESIÓN ---
         const logueado = localStorage.getItem('isLoggedIn');
         const nombre = localStorage.getItem('usuarioLogueado');
         const userLink = document.querySelector('.icon-link');
 
         if (logueado === 'true' && nombre && userLink) {
-            userLink.innerHTML = `<span style="color: white; font-weight: bold; font-size: 14px; text-decoration: none;">Hola, ${nombre}</span>`;
+            userLink.innerHTML = `<span style="color: white; font-weight: bold; font-size: 14px;">Hola, ${nombre}</span>`;
             userLink.href = "#"; 
-            userLink.onclick = () => {
+            userLink.onclick = (e) => {
+                e.preventDefault();
                 if(confirm("¿Quieres cerrar sesión?")) {
-                    localStorage.removeItem('isLoggedIn');
-                    localStorage.removeItem('usuarioLogueado');
+                    localStorage.clear();
                     location.reload();
                 }
             };
         }
 
-        // --- LOGICA DEL BUSCADOR (PRODUCTOS REALES) ---
         const inputBuscador = document.getElementById('buscador');
-        
-        // Aquí están los productos que tienes en tu disponibles.html
         const misProductos = [
             { nombre: "moño con aplique de nombre", url: "disponibles.html#monos-ninos" },
             { nombre: "moños para niños", url: "disponibles.html#monos-ninos" },
@@ -77,16 +77,8 @@
         inputBuscador.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const texto = inputBuscador.value.toLowerCase();
-                
-                // Buscamos si el nombre coincide con lo que el usuario escribió
                 const encontrado = misProductos.find(p => p.nombre.toLowerCase().includes(texto));
-
-                if (encontrado) {
-                    window.location.href = encontrado.url;
-                } else {
-                    alert("No encontramos '" + texto + "', pero puedes ver todo en Disponibles.");
-                    window.location.href = "disponibles.html";
-                }
+                window.location.href = encontrado ? encontrado.url : "disponibles.html";
             }
         });
     });
