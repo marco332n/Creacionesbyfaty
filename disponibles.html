@@ -6,6 +6,33 @@
     <title>Disponibles - Accesorios by Faty</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilo para los botones alineados */
+        .cart-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .btn-cart { flex: 1; } /* El botón de añadir ocupa el espacio sobrante */
+        
+        .btn-wishlist {
+            background-color: white;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-wishlist:hover {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        /* Ajuste para móvil */
+        @media (max-width: 480px) {
+            .cart-row { flex-direction: row; } 
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -20,122 +47,176 @@
             <div class="right-group">
                 <div class="icons-container">
                     <a href="index.html" class="icon-link"><i class="fa-solid fa-house"></i></a>
-                    
-                    <a href="login.html" class="icon-link" id="user-link">
-                        <i class="fa-regular fa-user"></i>
+                    <a href="login.html" class="icon-link" id="user-link"><i class="fa-regular fa-user"></i></a>
+                    <a href="https://goo.gl/maps/uytQGQUzdPxbK42b9" class="icon-link" target="_blank"><i class="fa-solid fa-location-dot"></i></a>
+                    <a href="carrito.html" style="text-decoration: none;">
+                        <div class="cart-wrapper">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="cart-badge" id="cart-count">0</span>
+                        </div>
                     </a>
-
-                    <a href="https://goo.gl/maps/uytQGQUzdPxbK42b9" class="icon-link" target="_blank">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </a>
-
-                    <div class="cart-wrapper">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="cart-badge">0</span>
-                    </div>
                 </div>
             </div>
         </div>
-        <nav class="sub-menu">
-            <ul class="menu">
-                <li><a href="disponibles.html">Disponibles ></a></li>
-            </ul>
-        </nav>
     </header>
 
     <main>
         <h3 class="section-title">Productos Disponibles</h3>
         
-        <section id="monos-ninos" class="products-section">
-            <h3 class="products-title">Moños para Niños</h3>
-            <div class="products-grid">
-                
-                <div class="product-card">
-                    <div class="product-image"><img src="moño-1.png.png" alt="Moño 1"></div>
-                    <div class="product-info">
-                        <h5>Moño con aplique 1</h5>
-                        <div class="product-buttons">
-                            <button class="btn-cart">Añadir al Carrito</button>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%201*" class="btn-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                        </div>
+<section id="monos-ninos" class="products-section">
+    <h3 class="products-title">Moños para Niños</h3>
+    <div class="products-grid">
+        
+        <div class="product-card">
+            <div class="product-image"><img src="moño-1.png.png" alt="Moño 1"></div>
+            <div class="product-info">
+                <h5>Moño con aplique 1</h5>
+                <div class="product-buttons">
+                    <div class="cart-row" style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <button class="btn-cart" data-name="Moño con aplique 1" data-price="25000" style="flex: 1;">Añadir al Carrito</button>
+                        <button class="btn-wishlist" data-name="Moño con aplique 1" data-price="25000" title="Guardar en favoritos" style="background: white; border: 2px solid #ff6b6b; color: #ff6b6b; padding: 8px 12px; border-radius: 8px; cursor: pointer;">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
                     </div>
+                    <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%201*" class="btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
                 </div>
-
-                <div class="product-card">
-                    <div class="product-image"><img src="moño-2.png.png" alt="Moño 2"></div>
-                    <div class="product-info">
-                        <h5>Moño con aplique 2</h5>
-                        <div class="product-buttons">
-                            <button class="btn-cart">Añadir al Carrito</button>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%202*" class="btn-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image"><img src="moño-3.png.png" alt="Moño 3"></div>
-                    <div class="product-info">
-                        <h5>Moño con aplique 3</h5>
-                        <div class="product-buttons">
-                            <button class="btn-cart">Añadir al Carrito</button>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%203*" class="btn-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image"><img src="moño-4.png.png" alt="Moño 4"></div>
-                    <div class="product-info">
-                        <h5>Moño con aplique 4</h5>
-                        <div class="product-buttons">
-                            <button class="btn-cart">Añadir al Carrito</button>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%204*" class="btn-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image"><img src="moño-5.png.png" alt="Moño 5"></div>
-                    <div class="product-info">
-                        <h5>Moño con aplique 5</h5>
-                        <div class="product-buttons">
-                            <button class="btn-cart">Añadir al Carrito</button>
-                            <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%205*" class="btn-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-        </section>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image"><img src="moño-2.png.png" alt="Moño 2"></div>
+            <div class="product-info">
+                <h5>Moño con aplique 2</h5>
+                <div class="product-buttons">
+                    <div class="cart-row" style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <button class="btn-cart" data-name="Moño con aplique 2" data-price="25000" style="flex: 1;">Añadir al Carrito</button>
+                        <button class="btn-wishlist" data-name="Moño con aplique 2" data-price="25000" title="Guardar en favoritos" style="background: white; border: 2px solid #ff6b6b; color: #ff6b6b; padding: 8px 12px; border-radius: 8px; cursor: pointer;">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%202*" class="btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image"><img src="moño-3.png.png" alt="Moño 3"></div>
+            <div class="product-info">
+                <h5>Moño con aplique 3</h5>
+                <div class="product-buttons">
+                    <div class="cart-row" style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <button class="btn-cart" data-name="Moño con aplique 3" data-price="30000" style="flex: 1;">Añadir al Carrito</button>
+                        <button class="btn-wishlist" data-name="Moño con aplique 3" data-price="30000" title="Guardar en favoritos" style="background: white; border: 2px solid #ff6b6b; color: #ff6b6b; padding: 8px 12px; border-radius: 8px; cursor: pointer;">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%203*" class="btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image"><img src="moño-4.png.png" alt="Moño 4"></div>
+            <div class="product-info">
+                <h5>Moño con aplique 4</h5>
+                <div class="product-buttons">
+                    <div class="cart-row" style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <button class="btn-cart" data-name="Moño con aplique 4" data-price="28000" style="flex: 1;">Añadir al Carrito</button>
+                        <button class="btn-wishlist" data-name="Moño con aplique 4" data-price="28000" title="Guardar en favoritos" style="background: white; border: 2px solid #ff6b6b; color: #ff6b6b; padding: 8px 12px; border-radius: 8px; cursor: pointer;">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%204*" class="btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image"><img src="moño-5.png.png" alt="Moño 5"></div>
+            <div class="product-info">
+                <h5>Moño con aplique 5</h5>
+                <div class="product-buttons">
+                    <div class="cart-row" style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <button class="btn-cart" data-name="Moño con aplique 5" data-price="35000" style="flex: 1;">Añadir al Carrito</button>
+                        <button class="btn-wishlist" data-name="Moño con aplique 5" data-price="35000" title="Guardar en favoritos" style="background: white; border: 2px solid #ff6b6b; color: #ff6b6b; padding: 8px 12px; border-radius: 8px; cursor: pointer;">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <a href="https://wa.me/595986898428?text=Hola!%20Me%20interesa%20consultar%20por%20el%20*Moño%20con%20aplique%205*" class="btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- USUARIO ---
             const logueado = localStorage.getItem('isLoggedIn');
             const nombre = localStorage.getItem('usuarioLogueado');
-            const userLink = document.getElementById('user-link');
-
-            if (logueado === 'true' && nombre && userLink) {
-                userLink.innerHTML = `<span style="color: white; font-weight: bold; font-size: 14px; white-space: nowrap; margin-right: 5px;">Hola, ${nombre}</span>`;
-                userLink.href = "#"; 
-                userLink.onclick = (e) => {
-                    e.preventDefault();
-                    if(confirm("¿Quieres cerrar sesión?")) {
-                        localStorage.clear();
-                        location.reload();
-                    }
-                };
+            if (logueado === 'true' && nombre) {
+                document.getElementById('user-link').innerHTML = `<span style="color: white; font-weight: bold; font-size: 13px;">Hola, ${nombre}</span>`;
             }
+
+            // --- CARRITO Y FAVORITOS ---
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+            const badge = document.getElementById('cart-count');
+
+            function actualizarBadge() {
+                badge.innerText = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            }
+
+            // Función añadir al carrito
+            document.querySelectorAll('.btn-cart').forEach(boton => {
+                boton.addEventListener('click', () => {
+                    const nombreProd = boton.getAttribute('data-name');
+                    const precioProd = parseInt(boton.getAttribute('data-price'));
+                    const existente = carrito.find(p => p.nombre === nombreProd);
+
+                    if (existente) { existente.cantidad++; } 
+                    else { carrito.push({ nombre: nombreProd, precio: precioProd, cantidad: 1 }); }
+
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
+                    actualizarBadge();
+                    boton.innerText = "¡Añadido! ✓";
+                    setTimeout(() => boton.innerText = "Añadir al Carrito", 1000);
+                });
+            });
+
+            // Función añadir a favoritos (CORAZÓN)
+            document.querySelectorAll('.btn-wishlist').forEach(boton => {
+                boton.addEventListener('click', () => {
+                    const nombreProd = boton.getAttribute('data-name');
+                    const precioProd = parseInt(boton.getAttribute('data-price'));
+                    
+                    if (!favoritos.find(p => p.nombre === nombreProd)) {
+                        favoritos.push({ nombre: nombreProd, precio: precioProd });
+                        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+                        
+                        // Efecto visual
+                        boton.innerHTML = '<i class="fa-solid fa-heart"></i>';
+                        boton.style.backgroundColor = "#ff6b6b";
+                        boton.style.color = "white";
+                    } else {
+                        alert("Este producto ya está en tus favoritos.");
+                    }
+                });
+            });
+
+            actualizarBadge();
         });
     </script>
 </body>

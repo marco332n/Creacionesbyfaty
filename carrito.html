@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito - Accesorios by Faty</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .cart-container { padding: 20px 5%; max-width: 800px; margin: auto; min-height: 80vh; }
+        
+        /* Tarjetas de productos en carrito */
+        .cart-item { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: white; padding: 15px; border-radius: 12px; 
+            margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .cart-item-info h4 { color: #435D78; margin-bottom: 5px; font-size: 16px; }
+        .cart-item-info p { font-size: 14px; color: #666; }
+
+        /* Botones */
+        .cart-actions { display: flex; gap: 10px; align-items: center; }
+        .btn-remove { background: #ff6b6b; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+        .btn-fav { background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 20px; }
+        
+        /* Sección Favoritos */
+        .fav-section { margin-top: 40px; border-top: 2px dashed #d1acff; padding-top: 20px; }
+        .fav-item { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: #fdfbff; padding: 12px; border-radius: 10px; 
+            margin-bottom: 10px; border: 1px solid #eee;
+        }
+        .btn-add-back { background: #d1acff; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
+
+        /* Total y Checkout */
+        .cart-total { text-align: right; margin-top: 25px; font-size: 22px; color: #435D78; font-weight: bold; }
+        .btn-checkout {
+            display: block; width: 100%; background: #25D366; color: white;
+            text-align: center; padding: 16px; border-radius: 12px;
+            text-decoration: none; font-weight: bold; margin-top: 20px; font-size: 18px;
+        }
+        .empty-msg { text-align: center; color: #888; margin-top: 50px; }
+
+        /* --- ADAPTACIÓN MÓVIL --- */
+        @media (max-width: 600px) {
+            .cart-item { flex-direction: column; text-align: center; gap: 15px; }
+            .fav-item { flex-direction: column; text-align: center; gap: 10px; }
+            .cart-actions { width: 100%; justify-content: center; }
+            .cart-total { text-align: center; font-size: 20px; }
+            .btn-checkout { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <div class="logo-wrapper">
+            <img src="logotipo.png.png" alt="Logo">
+            <div class="title-container">
+                <h1>Accesorios</h1>
+                <h2>by faty</h2>
+            </div>
+        </div>
+        <div class="right-group">
+            <a href="disponibles.html" class="icon-link"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</header>
+
+<main class="cart-container">
+    <h2 class="section-title">Tu Carrito</h2>
+    
+    <div id="lista-carrito">
+        </div>
+    
+    <div id="cart-summary" style="display: none;">
+        <div class="cart-total">Total: <span id="total-precio">0</span> Gs.</div>
+        <a href="#" id="enviar-whatsapp" class="btn-checkout">
+            <i class="fab fa-whatsapp"></i> Confirmar Pedido
+        </a>
+        <button onclick="vaciarCarrito()" style="background:none; border:none; color:#ff6b6b; cursor:pointer; width:100%; margin-top:20px; font-weight:bold;">
+            <i class="fa-solid fa-trash-can"></i> Vaciar Carrito
+        </button>
+    </div>
+
+    <div class="fav-section">
+        <h3 style="color: #435D78; margin-bottom: 15px;">
+            <i class="fa-solid fa-heart" style="color: #ff6b6b;"></i> Mis Favoritos
+        </h3>
+        <div id="lista-favoritos">
+            </div>
+    </div>
+</main>
+
+<script>
+    function cargarPagina() {
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+        
+        const listaCarrito = document.getElementById('lista-carrito');
+        const listaFavs = document.getElementById('lista-favoritos');
+        const totalElement = document.getElementById('total-precio');
+        const summary = document.getElementById('cart-summary');
+        const btnWhatsapp = document.getElementById('enviar-whatsapp');
+
+        // --- RENDERIZAR CARRITO ---
+        listaCarrito.innerHTML = '';
+        if (carrito.length === 0) {
+            listaCarrito.innerHTML = '<p class="empty-msg">Tu carrito está vacío.</p>';
+            summary.style.display = 'none';
+        } else {
+            summary.style.display = 'block';
+            let total = 0;
+            let mensajePedido = "¡Hola Faty! Me gustaría realizar este pedido:%0A";
+
+            carrito.forEach((item, index) => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                mensajePedido += `- ${item.cantidad}x ${item.nombre} (${subtotal.toLocaleString()} Gs.)%0A`;
+
+                listaCarrito.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.nombre}</h4>
+                            <p>${item.cantidad} unidad(es) x ${item.precio.toLocaleString()} Gs.</p>
+                        </div>
+                        <div class="cart-actions">
+                            <button class="btn-fav" onclick="moverAFavoritos(${index})"><i class="fa-regular fa-heart"></i></button>
+                            <button class="btn-remove" onclick="eliminarDelCarrito(${index})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+            totalElement.innerText = total.toLocaleString();
+            mensajePedido += `%0A*Total: ${total.toLocaleString()} Gs.*`;
+            btnWhatsapp.href = `https://wa.me/595986898428?text=${mensajePedido}`;
+        }
+
+        // --- RENDERIZAR FAVORITOS ---
+        listaFavs.innerHTML = '';
+        if (favoritos.length === 0) {
+            listaFavs.innerHTML = '<p style="color:#aaa; font-size:14px; text-align:center;">No tienes productos guardados.</p>';
+        } else {
+            favoritos.forEach((item, index) => {
+                listaFavs.innerHTML += `
+                    <div class="fav-item">
+                        <div class="cart-item-info">
+                            <h4>${item.nombre}</h4>
+                            <p>${item.precio.toLocaleString()} Gs.</p>
+                        </div>
+                        <div class="cart-actions">
+                            <button class="btn-add-back" onclick="moverAlCarrito(${index})">Volver al carrito</button>
+                            <button class="btn-remove" onclick="eliminarDeFavoritos(${index})">×</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    }
+
+    function eliminarDelCarrito(index) {
+        let carrito = JSON.parse(localStorage.getItem('carrito'));
+        carrito.splice(index, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        cargarPagina();
+    }
+
+    function moverAFavoritos(index) {
+        let carrito = JSON.parse(localStorage.getItem('carrito'));
+        let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+        favoritos.push(carrito[index]);
+        carrito.splice(index, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+        cargarPagina();
+    }
+
+    function moverAlCarrito(index) {
+        let favoritos = JSON.parse(localStorage.getItem('favoritos'));
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carrito.push(favoritos[index]);
+        favoritos.splice(index, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+        cargarPagina();
+    }
+
+    function eliminarDeFavoritos(index) {
+        let favoritos = JSON.parse(localStorage.getItem('favoritos'));
+        favoritos.splice(index, 1);
+        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+        cargarPagina();
+    }
+
+    function vaciarCarrito() {
+        if(confirm("¿Quieres vaciar todo el carrito?")) {
+            localStorage.removeItem('carrito');
+            cargarPagina();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarPagina);
+</script>
+</body>
+</html>
