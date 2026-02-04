@@ -34,45 +34,45 @@ header {
 /* --- NUEVO BUSCADOR --- */
 .right-group { display: flex; align-items: center; gap: 20px; }
 
-/* Contenedor principal del buscador */
 .search-wrapper {
-    position: relative; /* Esto es como un ancla para la lupa */
+    position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
-    max-width: 200px; /* Tamaño ideal para móvil y PC */
 }
 
-/* El campo de texto */
 .search-input {
-    width: 100%;
-    padding: 8px 35px 8px 15px; /* Dejamos 35px a la derecha para que el texto no tape la lupa */
-    border-radius: 25px;
-    border: none;
+    width: 180px;
+    padding: 8px 35px 8px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
     outline: none;
     font-size: 14px;
-    background-color: white;
+    transition: all 0.3s ease;
+    background: white;
 }
 
-/* La lupa: ahora sí quedará fija adentro */
+/* Efecto al hacer clic en buscar */
+.search-input:focus {
+    width: 220px;
+    border-color: #435D78;
+    box-shadow: 0 0 5px rgba(67, 93, 120, 0.2);
+}
+
 .search-icon-btn {
-    position: absolute; /* Esto la obliga a quedarse dentro del buscador */
-    right: 10px;        /* A 10 pixeles del borde derecho */
+    position: absolute;
+    right: 5px;
     background: none;
     border: none;
-    color: #435D78;     /* Color oscuro para que se vea bien */
+    color: #d1acff; /* Color lila para resaltar sobre el blanco */
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    height: 100%;       /* Para que esté centrada verticalmente */
+    padding: 5px;
+    font-size: 14px;
+    transition: transform 0.2s;
 }
 
-/* Quitemos cualquier borde feo que ponga el navegador por defecto */
-.search-icon-btn:focus, .search-icon-btn:active {
-    outline: none;
-    border: none;
+.search-icon-btn:hover {
+    transform: scale(1.2);
+    color: #435D78;
 }
 
 /* Iconos y Carrito */
@@ -80,14 +80,40 @@ header {
 .icon-link { color: white; font-size: 20px; text-decoration: none; transition: 0.3s; }
 .icon-link:hover { opacity: 0.8; transform: scale(1.1); }
 
-.cart-wrapper { display: flex; align-items: center; gap: 5px; color: white; font-size: 20px; }
-.cart-badge { 
-    font-size: 14px; 
-    font-weight: bold; 
-    background: #ff6b6b; 
+/* Contenedor del carrito: relativo para que el badge sepa dónde ubicarse */
+.cart-wrapper { 
+    position: relative; /* Clave: sirve de ancla para el badge */
+    display: flex; 
+    align-items: center; 
     color: white; 
-    padding: 2px 7px; 
+    font-size: 24px; /* Un poco más grande para que se vea bien */
+    padding: 5px;
+}
+
+/* El círculo rojo (badge) */
+.cart-badge { 
+    position: absolute; /* Se mueve independientemente del icono */
+    top: -5px;          /* Lo sube un poco */
+    right: -8px;        /* Lo mueve a la derecha del icono */
+    
+    font-size: 11px;    /* Texto pequeño y legible */
+    font-weight: bold; 
+    background: #d1acff; 
+    color: white; 
+    
+    /* Tamaño fijo para que sea un círculo perfecto */
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    
     border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Un borde pequeño para que resalte sobre el fondo lila */
+    border: 2px solid #d1acff; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 /* --- 3. MENÚ BLANCO --- */
@@ -138,7 +164,7 @@ header {
 }
 
 .product-card:hover .product-image img {
-    transform: scale(1.15); 
+    transform: scale(1.6); 
 }
 
 /* --- 6. BOTONES DE ACCIÓN --- */

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto - Accesorios by Faty</title>
+    <link rel="stylesheet" href="compras.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <a href="javascript:history.back()" class="btn-volver" id="botonAtras">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-wrapper">
+                <img src="logotipo.png.png" alt="Logo">
+                <div class="title-container">
+                    <h1>Accesorios</h1>
+                    <h2>by faty</h2>
+                </div>
+            </div>
+            <div class="right-group">
+                <div class="icons-container">
+                    <a href="index.html" class="icon-link"><i class="fa-solid fa-house"></i></a>
+                    <a href="carrito.html" style="text-decoration: none;">
+                        <div class="cart-wrapper">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="cart-badge" id="cart-count">0</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="ficha-producto">
+        <div class="contenedor-zoom">
+            <img src="moño-2.png.png" id="imagenProducto" alt="Moño Azul Natalia">
+        </div>
+        <div class="info-detalles">
+            <div class="product-buttons">
+                <div class="cart-row">
+                    <button class="btn-cart" data-name="Moño con aplique 2" data-price="25000">Añadir al Carrito</button>
+                    <button class="btn-wishlist" data-name="Moño con aplique 2"><i class="fa-regular fa-heart"></i></button>
+                </div>
+                    <a href="https://wa.me/595986898428?text=Hola!%20quisiera%20hacer%20una%20consulta%20sobre..." class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+            <h2>Detalles del producto:</h2>
+            <ul>
+                <li><strong>Material:</strong> Listón de alta calidad tipo falla (grogue) con acabado texturizado.</li>
+                <li><strong>Diseño:</strong> Combinación bitono en azul rey y azul cielo, con elegantes costuras doradas en los bordes.</li>
+                <li><strong>Premium:</strong> Placa personalizada con el nombre "Natalia" en acabado acrílico espejo dorado, que añade un brillo único.</li>
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        // --- LÓGICA DEL BOTÓN APARECER/OCULTAR ---
+        const btnAtras = document.getElementById('botonAtras');
+        let tiempoOcultar;
+
+        document.addEventListener('click', () => {
+            clearTimeout(tiempoOcultar); // Reinicia el tiempo si el usuario sigue tocando
+            btnAtras.classList.add('visible');
+            
+            // Se oculta tras 3 segundos de inactividad
+            tiempoOcultar = setTimeout(() => {
+                btnAtras.classList.remove('visible');
+            }, 3000);
+        });
+
+        // --- LÓGICA DEL ZOOM TÁCTIL ---
+        const img = document.getElementById('imagenProducto');
+
+        img.addEventListener('touchstart', (e) => {
+            img.style.transform = "scale(3)";
+        });
+
+        img.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const rect = img.getBoundingClientRect();
+            const x = ((touch.clientX - rect.left) / rect.width) * 100;
+            const y = ((touch.clientY - rect.top) / rect.height) * 100;
+            img.style.transformOrigin = `${x}% ${y}%`;
+        });
+
+        img.addEventListener('touchend', () => {
+            img.style.transform = "scale(1)";
+            img.style.transformOrigin = "center center";
+        });
+        
+            // Carrito
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const badge = document.getElementById('cart-count');
+            const updateBadge = () => { badge.innerText = carrito.reduce((s, i) => s + i.cantidad, 0); };
+            updateBadge();
+
+            document.querySelectorAll('.btn-cart').forEach(b => {
+                b.addEventListener('click', () => {
+                    const n = b.getAttribute('data-name'), p = parseInt(b.getAttribute('data-price'));
+                    const ex = carrito.find(i => i.nombre === n);
+                    if(ex) ex.cantidad++; else carrito.push({nombre:n, precio:p, cantidad:1});
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
+                    updateBadge();
+                    b.innerText = "¡Añadido! ✓"; setTimeout(() => b.innerText = "Añadir al Carrito", 1000);
+                });
+            });
+
+            // --- FAVORITOS (CORREGIDO) ---
+            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+            // 1. Al cargar, marcar los que ya son favoritos
+            document.querySelectorAll('.btn-wishlist').forEach(b => {
+                const nombreProducto = b.getAttribute('data-name');
+                if (favoritos.includes(nombreProducto)) {
+                    b.classList.add('active');
+                    b.innerHTML = '<i class="fa-solid fa-heart"></i>'; // Corazón lleno
+                }
+            });
+
+            // 2. Lógica de clic (Quitar/Poner)
+            document.querySelectorAll('.btn-wishlist').forEach(b => {
+                b.addEventListener('click', () => {
+                    const n = b.getAttribute('data-name');
+                    const index = favoritos.indexOf(n);
+
+                    if (index === -1) {
+                        // No es favorito, añadir
+                        favoritos.push(n);
+                        b.classList.add('active');
+                        b.innerHTML = '<i class="fa-solid fa-heart"></i>';
+                    } else {
+                        // Ya es favorito, quitar
+                        favoritos.splice(index, 1);
+                        b.classList.remove('active');
+                        b.innerHTML = '<i class="fa-regular fa-heart"></i>'; // Corazón vacío
+                    }
+                    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+                });
+            });
+    </script>
+</body>
+</html>
