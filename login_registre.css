@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #ffefef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Cambiado de height a min-height para evitar cortes */
+    padding: 20px; /* Espacio de seguridad para que no toque los bordes del cel */
+    box-sizing: border-box;
+}
+
+.login-container {
+    background-color: white;
+    padding: 30px; /* Un poco menos de padding para ganar espacio */
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 380px; /* Un pelín más ancho para mejor legibilidad */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+h2 {
+    color: #435D78;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #435D78;
+    font-size: 15px; /* Un poco más grande para el cel */
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px; /* Más alto para que sea fácil de tocar */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 16px; /* ¡IMPORTANTE! Evita que el iPhone haga zoom automático */
+}
+
+.input-group input:focus {
+    border-color: #d1acff;
+    box-shadow: 0 0 5px rgba(209, 172, 255, 0.5);
+}
+
+.btn-login {
+    width: 100%;
+    padding: 16px;
+    background-color: #d1acff;
+    border: none;
+    border-radius: 10px;
+    color: #435D78;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background-color: #b88ee6;
+    transform: translateY(-2px);
+}
+
+.back-link {
+    display: inline-block; /* Mejor para el espaciado táctil */
+    margin-top: 20px;
+    text-decoration: none;
+    color: #435D78;
+    font-size: 14px; /* Un poco más grande para que sea fácil de clickear */
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: #b88ee6;
+}
+
+/* --- AJUSTE EXTRA PARA PANTALLAS MUY PEQUEÑAS --- */
+@media (max-width: 380px) {
+    .login-container {
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+}

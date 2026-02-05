@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Registro - Accesorios by Faty</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles2.css"> 
+    <link rel="stylesheet" href="login_registre.css">
+
 </head>
 <body>
     <div class="login-container">
@@ -24,22 +25,31 @@
         </form>
     </div>
 
-    <script>
-        document.getElementById('formularioRegistro').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPass').value;
+<script>
+    document.getElementById('formularioRegistro').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('regEmail').value;
+        const pass = document.getElementById('regPass').value;
 
-            // Obtenemos los usuarios que ya existan o creamos una lista vacía
-            let usuarios = JSON.parse(localStorage.getItem('usuariosRegistrados')) || {};
+        // Obtenemos los usuarios o iniciamos vacío
+        let usuarios = JSON.parse(localStorage.getItem('usuariosRegistrados')) || {};
 
-            // Guardamos el nuevo usuario
-            usuarios[email] = pass;
-            localStorage.setItem('usuariosRegistrados', JSON.stringify(usuarios));
+        // EXTRA: Creamos un nombre bonito basado en el email
+        // Ejemplo: faty.accesorios@gmail.com -> Faty
+        let nombreParaMostrar = email.split('@')[0].split('.')[0];
+        nombreParaMostrar = nombreParaMostrar.charAt(0).toUpperCase() + nombreParaMostrar.slice(1);
 
-            alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
-            window.location.href = 'login.html';
-        });
-    </script>
+        // GUARDAMOS COMO OBJETO (Esto es lo importante)
+        usuarios[email] = {
+            password: pass,
+            nombre: nombreParaMostrar
+        };
+
+        localStorage.setItem('usuariosRegistrados', JSON.stringify(usuarios));
+
+        alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+        window.location.href = 'login.html';
+    });
+</script>
 </body>
 </html>

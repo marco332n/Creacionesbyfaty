@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+
 <header>
     <div class="header-content">
         <div class="logo-wrapper">
@@ -27,17 +28,17 @@
                 </button>
             </div>
 
-            <div class="icons-container icons-row">
+            <div class="icons-container">
                 <a href="login.html" class="icon-link" id="user-link">
                     <i class="fa-regular fa-user"></i>
                 </a>
-
                 <a href="https://goo.gl/maps/uytQGQUzdPxbK42b9" class="icon-link" target="_blank">
                     <i class="fa-solid fa-location-dot"></i>
                 </a>
             </div>
         </div>
     </div> 
+
     <nav class="sub-menu">
         <ul class="menu">
             <li><a href="disponibles.html">Disponibles ></a></li>
@@ -45,59 +46,95 @@
     </nav>
 </header>
 
-<main style="text-align: center; padding: 50px;">
-    <h2 style="color: #435D78;">¡Bienvenida a nuestra tienda!</h2>
-    <p>Explora nuestros productos exclusivos en la sección de Disponibles.</p>
+<main>
+    <section class="welcome-section">
+        <h2>¡Bienvenida a nuestra tienda!</h2>
+        <p>Explora nuestros productos exclusivos en la sección de Disponibles.</p>
+    </section>
+
+    <div class="categories-grid">
+        <div class="category-card">
+            <img src="moño-1.png.png" alt="Zapatillas">
+            <h3>Zapatillas</h3>
+        </div>
+        <div class="category-card">
+            <img src="moño-1.png.png" alt="Moños">
+            <h3>Moños</h3>
+        </div>
+    </div>
+<div class="details-list">
+    <div class="detail-item">
+        <div class="detail-img">
+            <img src="moño-1.png.png" alt="Producto">
+        </div>
+        <div class="detail-text">
+            <p>gkkkkgxmjdNus</p>
+            <p>nlhfxbjgkkkkgxmjdNus</p>
+            <p>nlhfxbjgkkkkgxmjdNus</p>
+        </div>
+    </div>
+
+    <div class="detail-item reverse">
+        <div class="detail-text">
+            <p>gkkkkgxmjdNus</p>
+            <p>nlhfxbjgkkkkgxmjdNus</p>
+            <p>nlhfxbjgkkkkgxmjdNus</p>
+        </div>
+        <div class="detail-img">
+            <img src="moño-1.png.png" alt="Producto">
+        </div>
+    </div>
+</div>
 </main>
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3>Contacto</h3>
+            <div class="footer-item">
+                <i class="fa-regular fa-comment-dots"></i>
+                <div class="item-text">
+                    <strong>Contactanos</strong>
+                    <p>Hacenos tu consulta</p>
+                </div>
+            </div>
+            <div class="footer-item">
+                <i class="fa-brands fa-whatsapp"></i>
+                <div class="item-text">
+                    <strong>+595 975-67-82-80</strong>
+                    <p>Comprá por Whatsapp</p>
+                </div>
+            </div>
+        </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- LÓGICA DE LOGIN ---
-        const logueado = localStorage.getItem('isLoggedIn');
-        const nombre = localStorage.getItem('usuarioLogueado');
-        const userLink = document.getElementById('user-link');
+        <div class="footer-column">
+            <h3>Tienda Online</h3>
+            <ul>
+                <li><a href="#">fgsydhgxfcuhdgc</a></li>
+                <li><a href="#">kdvhxkgtu</a></li>
+                <li><a href="#">szghvzuyjtg</a></li>
+                <li><a href="#">jdghiuygcfiuy</a></li>
+            </ul>
+        </div>
 
-        if (logueado === 'true' && nombre && userLink) {
-            userLink.innerHTML = `<span style="color: white; font-weight: bold; font-size: 14px; white-space: nowrap;">Hola, ${nombre}</span>`;
-            userLink.href = "#"; 
-            userLink.onclick = (e) => {
-                e.preventDefault();
-                if(confirm("¿Quieres cerrar sesión?")) {
-                    localStorage.clear();
-                    location.reload();
-                }
-            };
-        }
+        <div class="footer-column">
+            <h3>siguenos en nuestras redes</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+            <div class="security-tag">
+                <i class="fa-solid fa-shield-heart"></i>
+                <span>Compra Segura</span>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Accesorios by Faty</p>
+    </div>
+</footer>
 
-        // --- LÓGICA DEL BUSCADOR ---
-        const inputBuscador = document.getElementById('buscador');
-        const btnBuscar = document.getElementById('btn-buscar');
-        const misProductos = [
-            { nombre: "moño con aplique de nombre", url: "disponibles.html#monos-ninos" },
-            { nombre: "moños para niños", url: "disponibles.html#monos-ninos" },
-            { nombre: "moños para adultos", url: "disponibles.html#monos-adultos" },
-            { nombre: "zapatillas para niños", url: "disponibles.html#zapatillas-ninos" },
-            { nombre: "zapatillas para adultos", url: "disponibles.html#zapatillas-adultos" }
-        ];
+<script src="index.js"></script>
 
-        function ejecutarBusqueda() {
-            const texto = inputBuscador.value.toLowerCase().trim();
-            if (texto !== "") {
-                const encontrado = misProductos.find(p => p.nombre.toLowerCase().includes(texto));
-                window.location.href = encontrado ? encontrado.url : "disponibles.html";
-            }
-        }
-
-        // Buscar al presionar Enter
-        inputBuscador.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                ejecutarBusqueda();
-            }
-        });
-
-        // Buscar al hacer clic en la lupa
-        btnBuscar.addEventListener('click', ejecutarBusqueda);
-    });
-</script>
 </body>
 </html>

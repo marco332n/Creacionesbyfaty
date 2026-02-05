@@ -3,52 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Moño Fácil Brillante - Accesorios by Faty">
+    <meta property="og:description" content="Explora los mejores accesorios. Calidad y brillo en cada detalle.">
+    <meta property="og:image" content="https://tuweb.com/moño-1.png.png">
+    <meta property="og:url" content="https://tuweb.com/index.html">
+    <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="logotipo.png.png">
     <title>Disponibles - Accesorios by Faty</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="disponibles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .cart-row { display: flex; gap: 8px; margin-bottom: 10px; }
-        .btn-cart { flex: 1; } 
-        
-        /* Estilos del botón favoritos */
-        .btn-wishlist {
-            background-color: white; border: 2px solid #ff6b6b; color: #ff6b6b;
-            padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: 0.3s;
-        }
-        /* Clase para cuando ya es favorito */
-        .btn-wishlist.active {
-            background-color: #ff6b6b;
-            color: white;
-        }
-
-        .game-launcher-container { text-align: center; margin: 20px 0; }
-        .btn-open-game {
-            background: #d1acff; color: white; border: none; padding: 12px 25px;
-            border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.3s;
-            display: inline-flex; align-items: center; gap: 10px;
-        }
-        .btn-open-game:hover { background: #b085f5; transform: scale(1.05); }
-
-        @media (max-width: 480px) { .cart-row { flex-direction: row; } }
-
-        #offline-game-container {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #f3eaff; z-index: 10000; text-align: center; padding-top: 50px;
-        }
-        #game-canvas {
-            width: 300px; height: 150px; border-bottom: 3px solid #435D78;
-            margin: 30px auto; position: relative; overflow: hidden; background: white; border-radius: 10px;
-        }
-        #player-monito {
-            width: 45px; height: 45px; position: absolute; bottom: 0; left: 30px;
-            transition: bottom 0.3s ease-in-out;
-        }
-        #cactus {
-            width: 25px; height: 35px; background: #b085f5;
-            position: absolute; bottom: 0; right: -50px; border-radius: 5px;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -164,103 +128,25 @@
         </section>
     </main>
 
-    <div id="offline-game-container">
-        <h2 style="color:#435D78;">Mini Juego Faty</h2>
+<div id="offline-game-container">
+    <div class="game-card">
+        <div class="game-header">
+            Puntos: <span id="score-val">0</span>
+        </div>
+        
         <div id="game-canvas">
-            <div id="player-monito"><img src="logotipo.png.png" style="width:100%; height:100%;"></div>
+            <button id="btn-iniciar-juego" onclick="iniciarJuego()">Iniciar</button>
+            
+            <div id="player-monito">
+                <img src="logotipo.png.png" alt="Jugador">
+            </div>
             <div id="cactus"></div>
         </div>
-        <div style="font-size: 24px; font-weight: bold; color: #435D78; margin: 15px 0;">
-            PUNTOS: <span id="score-val">0</span>
-        </div>
-        <button onclick="cerrarJuego()" style="padding:12px 25px; background:#435D78; color:white; border:none; border-radius:20px; cursor:pointer;">Volver a la Tienda</button>
+
+        <button class="btn-volver-tienda" onclick="cerrarJuego()">Volver a la Tienda</button>
     </div>
+</div>
 
-    <script>
-        // --- JUEGO ---
-        let puntos = 0, saltando = false, juegoActivo = false, bucleJuego;
-        function abrirJuego() { document.getElementById('offline-game-container').style.display = 'block'; iniciarJuego(); }
-        function cerrarJuego() { document.getElementById('offline-game-container').style.display = 'none'; clearInterval(bucleJuego); juegoActivo = false; }
-        function saltar() {
-            const p = document.getElementById('player-monito');
-            if (saltando || !p) return; saltando = true; p.style.bottom = "90px";
-            setTimeout(() => { if(p) p.style.bottom = "0"; setTimeout(() => saltando = false, 300); }, 400);
-        }
-        function iniciarJuego() {
-            if (juegoActivo) return; juegoActivo = true;
-            const c = document.getElementById('cactus'), s = document.getElementById('score-val');
-            puntos = 0; s.innerText = "0"; let cp = -50;
-            bucleJuego = setInterval(() => {
-                cp += 6; if (cp > 330) { cp = -50; puntos++; s.innerText = puntos; }
-                c.style.right = cp + "px";
-                let pb = parseInt(window.getComputedStyle(document.getElementById('player-monito')).getPropertyValue("bottom"));
-                if (cp > 230 && cp < 265 && pb < 35) { alert("¡Chocaste! Puntos: " + puntos); puntos = 0; s.innerText = "0"; cp = -50; }
-            }, 20);
-        }
-
-        // --- LÓGICA DE TIENDA ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Usuario
-            const nombre = localStorage.getItem('usuarioLogueado');
-            if (localStorage.getItem('isLoggedIn') === 'true' && nombre) {
-                document.getElementById('user-link').innerHTML = `<span style="color: white; font-weight: bold; font-size: 13px;">Hola, ${nombre}</span>`;
-            }
-
-            // Carrito
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            const badge = document.getElementById('cart-count');
-            const updateBadge = () => { badge.innerText = carrito.reduce((s, i) => s + i.cantidad, 0); };
-            updateBadge();
-
-            document.querySelectorAll('.btn-cart').forEach(b => {
-                b.addEventListener('click', () => {
-                    const n = b.getAttribute('data-name'), p = parseInt(b.getAttribute('data-price'));
-                    const ex = carrito.find(i => i.nombre === n);
-                    if(ex) ex.cantidad++; else carrito.push({nombre:n, precio:p, cantidad:1});
-                    localStorage.setItem('carrito', JSON.stringify(carrito));
-                    updateBadge();
-                    b.innerText = "¡Añadido! ✓"; setTimeout(() => b.innerText = "Añadir al Carrito", 1000);
-                });
-            });
-
-            // --- FAVORITOS (CORREGIDO) ---
-            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-
-            // 1. Al cargar, marcar los que ya son favoritos
-            document.querySelectorAll('.btn-wishlist').forEach(b => {
-                const nombreProducto = b.getAttribute('data-name');
-                if (favoritos.includes(nombreProducto)) {
-                    b.classList.add('active');
-                    b.innerHTML = '<i class="fa-solid fa-heart"></i>'; // Corazón lleno
-                }
-            });
-
-            // 2. Lógica de clic (Quitar/Poner)
-            document.querySelectorAll('.btn-wishlist').forEach(b => {
-                b.addEventListener('click', () => {
-                    const n = b.getAttribute('data-name');
-                    const index = favoritos.indexOf(n);
-
-                    if (index === -1) {
-                        // No es favorito, añadir
-                        favoritos.push(n);
-                        b.classList.add('active');
-                        b.innerHTML = '<i class="fa-solid fa-heart"></i>';
-                    } else {
-                        // Ya es favorito, quitar
-                        favoritos.splice(index, 1);
-                        b.classList.remove('active');
-                        b.innerHTML = '<i class="fa-regular fa-heart"></i>'; // Corazón vacío
-                    }
-                    localStorage.setItem('favoritos', JSON.stringify(favoritos));
-                });
-            });
-
-            // Eventos Juego
-            window.addEventListener('offline', () => abrirJuego());
-            document.addEventListener('keydown', e => { if(e.code === "Space") { e.preventDefault(); saltar(); }});
-            document.getElementById('offline-game-container').addEventListener('touchstart', e => { if(e.target.tagName !== 'BUTTON') { e.preventDefault(); saltar(); } }, {passive: false});
-        });
-    </script>
+<script src="disponibles.js"></script>
 </body>
 </html>

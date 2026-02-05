@@ -6,6 +6,7 @@
     <link rel="icon" type="image/png" href="logotipo.png.png">
     <title>Iniciar Sesión - Accesorios by Faty</title>
     <link rel="stylesheet" href="styles2.css"> 
+    <link rel="stylesheet" href="login_registre.css">
 </head>
 <body>
     <div class="login-container">
@@ -30,39 +31,38 @@
             <a href="index.html" class="back-link">← Volver a la tienda</a>
         </form>
     </div>
+<script>
+    const loginForm = document.getElementById('formularioLogin');
 
-    <script>
-        const loginForm = document.getElementById('formularioLogin');
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault(); 
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault(); 
+        const email = document.getElementById('emailLogin').value;
+        const pass = document.getElementById('passLogin').value;
+        
+        // 1. Traemos la lista de usuarios
+        const usuariosRegistrados = JSON.parse(localStorage.getItem('usuariosRegistrados')) || {};
 
-            const email = document.getElementById('emailLogin').value;
-            const pass = document.getElementById('passLogin').value;
-            
-            // 1. Traemos la lista de usuarios
-            const usuariosRegistrados = JSON.parse(localStorage.getItem('usuariosRegistrados')) || {};
+        // 2. VERIFICACIÓN
+        if (usuariosRegistrados[email]) {
+            // Accedemos a la contraseña dentro del objeto
+            const datosUsuario = usuariosRegistrados[email];
 
-            // 2. VERIFICACIÓN DE SEGURIDAD
-            if (usuariosRegistrados[email]) {
-                // Si el correo existe, verificamos la contraseña
-                if (usuariosRegistrados[email] === pass) {
-                    const nombreUsuario = email.split('@')[0];
+            if (datosUsuario.password === pass) {
+                // Guardamos los datos de sesión para la tienda
+                localStorage.setItem('usuarioLogueado', datosUsuario.nombre);
+                localStorage.setItem('isLoggedIn', 'true');
 
-                    localStorage.setItem('usuarioLogueado', nombreUsuario);
-                    localStorage.setItem('isLoggedIn', 'true');
-
-                    alert('¡Bienvenida de nuevo, ' + nombreUsuario + '!');
-                    window.location.href = 'index.html'; 
-                } else {
-                    alert('Contraseña incorrecta. Por favor, verifica tus datos.');
-                }
+                alert('¡Bienvenida de nuevo, ' + datosUsuario.nombre + '!');
+                window.location.href = 'index.html'; 
             } else {
-                // 3. SI NO EXISTE EL CORREO
-                alert('Este correo no está registrado. ¿Quieres crear una cuenta?');
-                window.location.href = 'registro.html'; 
+                alert('Contraseña incorrecta. Por favor, verifica tus datos.');
             }
-        });
-    </script>
+        } else {
+            alert('Este correo no está registrado. ¿Quieres crear una cuenta?');
+            window.location.href = 'registro.html'; 
+        }
+    });
+</script>
 </body>
 </html>
