@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'MervaleCustom';
+    src: url('MervaleScript-Regular.ttf');
+}
+
 /* --- base.css --- */
 * {
     box-sizing: border-box;
@@ -6,7 +11,7 @@
 }
 
 body {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -26,8 +31,14 @@ header {
 
 .logo-wrapper { display: flex; align-items: center; gap: 12px; }
 .logo-wrapper img { width: 55px; height: auto; }
-.title-container h1 { color: #435D78; font-size: 22px; margin: 0; }
-.title-container h2 { color: #435D78; font-size: 14px; font-weight: normal; margin: 0; }
+.title-container h1 { 
+    font-family: 'MervaleCustom', cursive; /* Aquí activas tu fuente */
+    color: #435D78; 
+    font-size: 40px; /* Aquí ya puedes poner el tamaño que quieras (80px, 100px, etc.) */
+    margin: 0; 
+    line-height: 0.8; /* Esto hace que el H1 no empuje al H2 tan abajo al crecer */
+}
+.title-container h2 { color: #435D78; font-size: 14px; font-weight: 200; margin: 0; }
 
 /* BUSCADOR */
 .right-group { display: flex; align-items: center; gap: 20px; }
@@ -97,34 +108,56 @@ main {
 }
 
 /* --- GRID DE CATEGORÍAS (Siempre 2 columnas) --- */
-.categories-grid {
+.categories-grid  {
+    text-decoration: none;
     display: grid;
     grid-template-columns: 1fr 1fr; /* Mantiene 2 columnas siempre */
     gap: 15px;
     margin-bottom: 40px;
 }
+a {
+    text-decoration: none !important; /* El !important asegura que gane a cualquier otro estilo */
+    color: inherit; /* Esto hace que el texto use el color del H3 y no el azul de link */
+    display: block; /* Ayuda a que todo el recuadro sea clickable sin problemas */
+}
+
+/* --- MODIFICACIÓN DE TARJETAS PARA TEXTO ENCIMA --- */
 
 .category-card {
+    position: relative; /* Esto permite que el h3 se posicione respecto a la tarjeta */
     background: white;
     border-radius: 20px;
-    padding: 15px;
+    padding: 0; /* Quitamos el relleno para que la imagen llegue a los bordes si quieres */
     text-align: center;
     box-shadow: 0 8px 20px rgba(0,0,0,0.05);
     border: 1px solid #f0f0f0;
+    overflow: hidden; /* Para que la imagen no se salga de las esquinas redondeadas */
 }
 
 .category-card img {
     width: 100%;
-    aspect-ratio: 1 / 1; /* Hace la imagen cuadrada */
-    object-fit: contain;
-    margin-bottom: 10px;
-    border-radius: 12px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain; /* Mantiene el moño completo sin cortarlo */
+    display: block;
+    margin-bottom: 0; /* Ya no necesitamos espacio abajo */
 }
 
 .category-card h3 {
-    color: #435D78;
-    font-size: 16px;
-    font-weight: 600;
+    position: absolute; /* ¡La magia! El texto ahora flota */
+    top: 50%;           /* Lo centramos verticalmente */
+    left: 50%;          /* Lo centramos horizontalmente */
+    transform: translate(-50%, -50%); /* Ajuste perfecto para el centro */
+    
+    color: #000000;     /* Mantengo tu color azul, pero puedes probar con 'white' */
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0;
+    
+    /* Un fondo sutil para que se lea bien sobre el moño */
+    background: rgba(255, 255, 255, 0.372); 
+    padding: 5px 15px;
+    border-radius: 10px;
+    pointer-events: none; /* Hace que el clic pase a través del texto hacia el link */
 }
 
 /* --- ESTILO FINAL DETALLES (SIN FONDO NI SOMBRAS) --- */
@@ -178,7 +211,7 @@ main {
     font-size: 14px;
     line-height: 1.6;
     margin-bottom: 4px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family:sans-serif
 }
 /* --- FOOTER ORGANIZADO Y FIJO --- */
 .main-footer {

@@ -57,7 +57,7 @@ function iniciarJuego() {
             s.innerText = `${puntos} (Record: ${recordCactus})`; 
 
             // DIFICULTAD: Aumentar velocidad cada 50 puntos
-            if (puntos > 0 && puntos % 50 === 0) {
+            if (puntos > 0 && puntos % 20 === 0) {
                 velocidadCactus += 1.5;
                 // Efecto visual rápido de "Nivel subido"
                 s.style.color = "#c39eff";
