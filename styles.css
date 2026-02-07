@@ -2,6 +2,10 @@
     font-family: 'MervaleCustom';
     src: url('MervaleScript-Regular.ttf');
 }
+@font-face{
+    font-family: 'Nefelibata';
+    src: url(Nefelibata-Script.ttf);
+}
 
 /* --- base.css --- */
 * {
@@ -11,34 +15,83 @@
 }
 
 body {
-    background-color: #ffffff;
+    background-color: #efe5ff;
     font-family: 'Segoe UI', sans-serif;
 }
 
 /* HEADER Y NAVEGACIÓN */
 header { 
-    background-color: #d1acff; 
+    background-color: #e4d3ff; 
     width: 100%; 
+        position: sticky;       /* Hace que el encabezado se quede fijo */
+    top: 0;                /* Se pega al borde superior */
+    z-index: 1000;         /* Asegura que siempre esté por encima de las fotos */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Opcional: una sombra para que se vea más profesional al bajar */
 }
 
+/* --- LOGO UNIFICADO: MARIPOSA SOBRE LA A --- */
+
+.logo-wrapper {
+    display: flex;
+    flex-direction: column; /* Mantiene 'BY FATY' debajo */
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.logo-container {
+    position: relative; /* Clave: La mariposa se queda anclada a la palabra */
+    display: inline-block;
+    padding-top: 15px;  /* Espacio para que la mariposa no se corte arriba */
+}
+
+.butterfly-overlay {
+    position: absolute;
+    width: 80px;        /* Tamaño de la mariposa según tu diseño */
+    height: auto;
+    top: -35px;          /* Ajuste vertical: pisa justo la parte alta de la A */
+    left: -20px;        /* Ajuste horizontal: la centra sobre la A */
+    z-index: 10;
+    pointer-events: none;
+    mix-blend-mode: multiply; /* Elimina fondos blancos automáticamente */
+}
+
+.logo-container h1 { 
+    font-family: 'Nefelibata', cursive;
+    font-weight: 200;
+    color: #1f2c39; 
+    font-size: 80px;    /* Tamaño grande para que luzca la tipografía */
+    margin: 0; 
+    line-height: 0.8;
+    position: relative;
+    z-index: 1;
+}
+
+.logo-wrapper h2 { 
+    color: #435D78; 
+    font-size: 20px; 
+    font-weight: 100; 
+    margin: 5px 0 0 15px; 
+    letter-spacing: 5px; /* Espaciado elegante */
+    text-transform: uppercase;
+}
+
+/* Ajuste del Header para que nada se encime */
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 5%;
-    min-height: 80px;
+    padding: 20px 5%;
+    min-height: 180px;
 }
 
-.logo-wrapper { display: flex; align-items: center; gap: 12px; }
-.logo-wrapper img { width: 55px; height: auto; }
-.title-container h1 { 
-    font-family: 'MervaleCustom', cursive; /* Aquí activas tu fuente */
+.title-container h2 { 
     color: #435D78; 
-    font-size: 40px; /* Aquí ya puedes poner el tamaño que quieras (80px, 100px, etc.) */
-    margin: 0; 
-    line-height: 0.8; /* Esto hace que el H1 no empuje al H2 tan abajo al crecer */
+    font-size: 22px; 
+    font-weight: 200; 
+    margin: 8px 0 0 15px; /* Un poco de margen a la izquierda para alinear */
+    letter-spacing: 2px;
 }
-.title-container h2 { color: #435D78; font-size: 14px; font-weight: 200; margin: 0; }
+.title-container h2 { color: #435D78; font-size: 22px; font-weight: 200; margin: 8; }
 
 /* BUSCADOR */
 .right-group { display: flex; align-items: center; gap: 20px; }

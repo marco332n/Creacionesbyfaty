@@ -278,3 +278,63 @@
         gap: 10px;
     }
 }
+
+/* --- LOGO Y MARIPOSA --- */
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo-container {
+    position: relative;
+    display: inline-block;
+}
+
+.butterfly-overlay {
+    position: absolute;
+    width: 80px;
+    height: auto;
+    top: -35px;
+    left: -20px;
+    z-index: 10;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+.logo-container h1 { 
+    font-family: 'Nefelibata', cursive;
+    color: #435D78; 
+    font-size: 80px;
+    margin: 0; 
+    line-height: 0.8;
+}
+
+.logo-wrapper h2 { 
+    color: #435D78; 
+    font-size: 20px; 
+    margin: 5px 0 0 15px; 
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+/* --- MENÚ INFERIOR RESTAURADO --- */
+.sub-menu { 
+    background-color: white; 
+    border-bottom: 1px solid #eee;
+    width: 100%;
+}
+
+.menu { 
+    list-style: none; 
+    display: flex; 
+    justify-content: center; 
+    padding: 12px; 
+}
+
+.menu a { 
+    text-decoration: none; 
+    color: #435D78; 
+    font-size: 14px; 
+    font-weight: 600;
+}
